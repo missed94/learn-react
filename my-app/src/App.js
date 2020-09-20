@@ -1,34 +1,17 @@
-import React, {Component} from "react";
-import "./App.css";
+import React from "react";
+import "./App.scss";
+import Header from "./components/Header";
+import Navigation from "./components/Navigation";
+import Profile from "./components/Profile";
 
 const App = () => {
   return (
-    <div>
-      <Header />
-      <Tehnologies />
-    </div>
-  );
-};
-
-const Tehnologies = () => {
-  return (
-    <div>
-      <ul>
-        <li>css</li>
-        <li>HTML</li>
-        <li>JS</li>
-      </ul>
-    </div>
-  );
-};
-const Header = () => {
-  return (
-    <div>
-      <ul>
-        <li>Home</li>
-        <li>News Feed</li>
-        <li>Messages</li>
-      </ul>
+    <div className="app-wrapper">
+      <div className="app-container">
+        <Header />
+        <Navigation />
+        <Profile/>
+      </div>
     </div>
   );
 };

@@ -1,0 +1,21 @@
+ul li {
+  list-style-type: none;
+}
+
+.app-wrapper {
+}
+
+.app-container {
+  width: 90%;
+  margin: 0 auto;
+  display: grid;
+
+  grid-template-areas:
+    "header header"
+    "navigation content";
+  grid-template-rows: 60px 1fr;
+  grid-template-columns: 2fr 10fr;
+  grid-gap: 10px;
+}
+
+
