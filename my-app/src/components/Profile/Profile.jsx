@@ -5,6 +5,7 @@ import classes from "./Profile.module.scss";
 const Profile = () => {
   return (
     <div className={classes.profile}>
+
       <div className={classes.banner__wrap}>
         <img
           className={classes.banner}
