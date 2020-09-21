@@ -1,5 +1,6 @@
 import React from "react";
-import classes from "./Profile.module.scss"
+import My_posts from "./My_posts/My_posts";
+import classes from "./Profile.module.scss";
 
 const Profile = () => {
   return (
@@ -10,8 +11,9 @@ const Profile = () => {
           src="https://s3.nat-geo.ru/images/2019/6/23/2054642dfdd241c99fc32579ab7e1c61.max-1200x800.jpg"
         />
       </div>
+      <My_posts/>
     </div>
   );
 };
 
-export default Profile
+export default Profile;
