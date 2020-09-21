@@ -2,7 +2,9 @@ ul li {
   list-style-type: none;
 }
 
-.app-wrapper {
+.app-wrapper-content {
+  grid-area: content;
+  background-color: yellow;
 }
 
 .app-container {
