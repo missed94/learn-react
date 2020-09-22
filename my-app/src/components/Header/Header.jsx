@@ -3,7 +3,7 @@ import classes from "./Header.module.scss"
 
 const Header = () => {
   return (
-    <header className={classes.header}>
+    <header className={classes.headerComponent}>
       <img src="https://image.similarpng.com/very-thumbnail/2020/07/Whatsapp-logo-design-on-transparent-background-PNG.png" />
     </header>
   );

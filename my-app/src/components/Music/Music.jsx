@@ -3,7 +3,7 @@ import classes from "./Music.module.scss";
 
 const Music = () => {
     return (
-        <div>
+        <div className="musicComponent">
             Music
         </div>
     );

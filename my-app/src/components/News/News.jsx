@@ -5,7 +5,7 @@ import classes from "./News.module.scss";
 
 const News = () => {
     return (
-        <div>
+        <div className="newsComponent">
             News
         </div>
     );
