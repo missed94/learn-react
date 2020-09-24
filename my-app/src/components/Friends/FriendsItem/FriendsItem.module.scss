@@ -1,0 +1,22 @@
+.friendsItemComponent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+  margin-bottom: 10px;
+  width: calc(100% / 3 - 10px);
+}
+
+.friendsItemComponent {
+  img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+  }
+}.friendsItemComponent {
+  a {
+    text-align: center;
+    cursor: pointer;
+  }
+}

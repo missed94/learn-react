@@ -4,16 +4,23 @@ import Dialog from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 
 
-
 const Dialogs = (props) => {
 
-    let dialogsArray = props.dialogs.map((dialog,i) => {
+    let dialogsArray = props.state.dialogs.map((dialog, i) => {
         return <Dialog key={i} name={dialog.name} id={dialog.id}/>
     })
 
-    let messagesArray = props.messages.map((message,i) => {
-        return <Message key={i} id={message.id} message={message.message}/>
+    let messagesArray = props.state.messages.map((message, i) => {
+        return <Message key={i} id={message.id} message={message.message} alignSelf={message.alignSelf}/>
     })
+
+    let textareaEl = React.createRef()
+
+    let getValue = () => {
+        let valueText = textareaEl.current.value;
+        alert(valueText)
+    }
+
 
     return (
         <div className={classes.dialogsComponent}>
@@ -26,7 +33,13 @@ const Dialogs = (props) => {
                 <ul className={classes.messages__list}>
                     {messagesArray}
                 </ul>
+
+                <textarea ref={textareaEl} className={classes.textarea}></textarea>
+                <button onClick={getValue} className={classes.btn}>Send message</button>
+
+
             </div>
+
         </div>
     )
 }

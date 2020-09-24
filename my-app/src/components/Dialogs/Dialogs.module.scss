@@ -14,10 +14,30 @@
 
 
 .messages {
-
+  width: 80%;
+  display: flex;
+  flex-direction: column;
 }
 
 .messages__list {
-
+display: flex;
+  flex-direction: column;
+  background-color: #d2d2d2;
+  padding: 10px 10px 0 10px;
 }
 
+.sendForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btn {
+display: inline-block;
+  width: 15%;
+  align-self: flex-end;
+}
