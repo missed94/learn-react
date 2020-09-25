@@ -6,20 +6,28 @@ import Message from "./Message/Message";
 
 const Dialogs = (props) => {
 
-    let dialogsArray = props.state.dialogs.map((dialog, i) => {
+    let dialogsArray = props.dialogsPage.dialogs.map((dialog, i) => {
         return <Dialog key={i} name={dialog.name} id={dialog.id}/>
     })
 
-    let messagesArray = props.state.messages.map((message, i) => {
-        return <Message key={i} id={message.id} message={message.message} alignSelf={message.alignSelf}/>
+    let messagesArray = props.dialogsPage.messages.map((message, i) => {
+        return <Message key={i} id={message.id} message={message.message}/>
     })
+
+
 
     let textareaEl = React.createRef()
 
-    let getValue = () => {
-        let valueText = textareaEl.current.value;
-        alert(valueText)
+    let onMessageChange = () => {
+        let valueText = textareaEl.current.value;//получаем значение инпута
+        props.updateMessageText(valueText);//запускаем функцию в качестве аргумента значение из инпута
     }
+
+    let sendMessage = () => {
+        props.sendMessage()
+    }
+
+
 
 
     return (
@@ -34,8 +42,8 @@ const Dialogs = (props) => {
                     {messagesArray}
                 </ul>
 
-                <textarea ref={textareaEl} className={classes.textarea}></textarea>
-                <button onClick={getValue} className={classes.btn}>Send message</button>
+                <textarea onChange={onMessageChange} value={props.dialogsPage.newMessage} ref={textareaEl} className={classes.textarea}/>
+                <button onClick={sendMessage} className={classes.btn}>Send message</button>
 
 
             </div>
