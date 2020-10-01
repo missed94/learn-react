@@ -2,6 +2,7 @@ import React from "react";
 import classes from "./Dialogs.module.scss";
 import Dialog from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
+import {onMessageChangeActionCreator, sendMessageActionCreator} from "../../redux/state";
 
 
 const Dialogs = (props) => {
@@ -16,15 +17,16 @@ const Dialogs = (props) => {
 
 
 
-    let textareaEl = React.createRef()
 
-    let onMessageChange = () => {
-        let valueText = textareaEl.current.value;//получаем значение инпута
-        props.updateMessageText(valueText);//запускаем функцию в качестве аргумента значение из инпута
+    let onMessageChange = (e) => {
+        let valueText = e.target.value;//получаем значение инпута
+        let action = onMessageChangeActionCreator(valueText);
+        props.dispatch(action);//запускаем метод dispatch в качестве аргумента тип action и значение из инпута в свойство newText
     }
 
     let sendMessage = () => {
-        props.sendMessage()
+        let action = sendMessageActionCreator();
+        props.dispatch(action)
     }
 
 
@@ -42,7 +44,7 @@ const Dialogs = (props) => {
                     {messagesArray}
                 </ul>
 
-                <textarea onChange={onMessageChange} value={props.dialogsPage.newMessage} ref={textareaEl} className={classes.textarea}/>
+                <textarea onChange={onMessageChange} value={props.dialogsPage.newMessage} className={classes.textarea}/>
                 <button onClick={sendMessage} className={classes.btn}>Send message</button>
 
 

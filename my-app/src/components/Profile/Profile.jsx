@@ -2,6 +2,7 @@ import React from "react";
 import My_posts from "./My_posts/My_posts";
 import classes from "./Profile.module.scss";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
+import Dialogs from "../Dialogs/Dialogs";
 
 
 
@@ -12,9 +13,8 @@ const Profile = (props) => {
             <ProfileInfo />
             <My_posts
                 myPosts={props.profilePage.myPosts}
-                addPost={props.addPost}
+                dispatch={props.dispatch}
                 newPostText={props.profilePage.newPostText}
-                updateNewPostText={props.updateNewPostText}
             />
         </div>
     );

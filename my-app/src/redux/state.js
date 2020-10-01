@@ -1,3 +1,12 @@
+const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
+const ADD_POST = 'ADD-POST';
+
+const UPDATE_MESSAGE_TEXT = 'UPDATE-MESSAGE-TEXT';
+const SEND_MESSAGE = 'SEND-MESSAGE';
+
+
+
+
 
 let store = {
 
@@ -24,7 +33,7 @@ let store = {
                 {id: 3, message: "What is your health"},
             ],
 
-            newMessage:"",
+            newMessage: "",
         },
         sidebar: {
             friends: [
@@ -35,54 +44,70 @@ let store = {
             ]
         }
     },
-
-    getState() {
-        return this._state
-    },
-
     _callSubscriber() {
 
     },
 
-    updateNewPostText(newText) {
-        this._state.profilePage.newPostText = newText;
-        this._callSubscriber(this._state);
-    },
-
-    addPost() {
-        let newPost = {
-            id: 5,
-            message: this._state.profilePage.newPostText,
-            likes: 0,
-        };
-
-        this._state.profilePage.myPosts.push(newPost);
-        this._state.profilePage.newPostText = '';
-        this._callSubscriber(this._state);
-    },
-
-    updateMessageText(newText) {
-
-        this._state.dialogsPage.newMessage = newText;//добавляем полученный текст в свойство newMessage объекта dialogsPage
-        this._callSubscriber(this._state);//ререндерим страницу
-    },
-
-    sendMessage() {
-        let newMessage = { //добавляем значение свойства newMessage в свойство message нового промежуточного объекта
-            id: 10,
-            message: this._state.dialogsPage.newMessage,
-        }
-
-        this._state.dialogsPage.messages.push(newMessage); //далее пушим промежуточный объект в свойство messages объекта dialogsPage
-        this._state.dialogsPage.newMessage = '';//обнуляем инпут
-        this._callSubscriber(this._state);//ререндерим страницу
-    },
-
     subscribe(observer) {
         this._callSubscriber = observer;
+    },
+    getState() {
+        return this._state
+    },
+
+    dispatch(action) {  //{ type: 'ADD-POST' } // общий метод для всей логики. Принимает тип объекта action и, если нужно дополниельные данные
+        if (action.type === UPDATE_NEW_POST_TEXT) {
+            this._state.profilePage.newPostText = action.newText;
+            this._callSubscriber(this._state);
+
+        } else if (action.type === ADD_POST) {
+            let newPost = {
+                id: 5,
+                message: this._state.profilePage.newPostText,
+                likes: 0,
+            };
+
+            this._state.profilePage.myPosts.push(newPost);
+            this._state.profilePage.newPostText = '';
+            this._callSubscriber(this._state);
+
+        } else if (action.type === UPDATE_MESSAGE_TEXT) {
+            this._state.dialogsPage.newMessage = action.newText;//добавляем полученный текст в свойство newMessage объекта dialogsPage
+            this._callSubscriber(this._state);//ререндерим страницу
+
+        } else if (action.type === SEND_MESSAGE) {
+            let newMessage = { //добавляем значение свойства newMessage в свойство message нового промежуточного объекта
+                id: 10,
+                message: this._state.dialogsPage.newMessage,
+            }
+
+            this._state.dialogsPage.messages.push(newMessage); //далее пушим промежуточный объект в свойство messages объекта dialogsPage
+            this._state.dialogsPage.newMessage = '';//обнуляем инпут
+            this._callSubscriber(this._state);//ререндерим страницу
+        }
     }
 
+
 }
+
+
+export const addPostActionCreator = () => ({type: ADD_POST})
+
+
+export const updateNewPostTextActionCreator = (text) => ({
+        type: UPDATE_NEW_POST_TEXT,
+        newText: text,
+    })
+
+
+export const sendMessageActionCreator = () => ({type: SEND_MESSAGE})
+
+
+export const onMessageChangeActionCreator = (valueText) => ({
+        type: UPDATE_MESSAGE_TEXT,
+        newText:valueText,
+    })
+
 
 /*let rerenderEntireTree = () => {
 }*/
@@ -127,7 +152,6 @@ let store = {
 }*/
 
 
-
 /*
 export let addPost = () => {
     let newPost = {
@@ -147,7 +171,6 @@ export let addPost = () => {
     state.profilePage.newPostText = newText;
     rerenderEntireTree(state);
 }*/
-
 
 
 /*export let updateMessageText = (newText) => {
