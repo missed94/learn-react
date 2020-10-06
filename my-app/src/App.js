@@ -3,7 +3,6 @@ import {Route} from "react-router-dom";
 import "./App.scss";
 import Header from "./components/Header/Header";
 import Profile from "./components/Profile/Profile";
-import Dialogs from "./components/Dialogs/Dialogs";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
@@ -32,8 +31,6 @@ const App = (props) => {
                         <DialogsContainer
                             /*dispatch={props.dispatch}
                             dialogsPage={props.state.dialogsPage}*/
-                            store={props.store}
-
                         />
                     }
                     />
@@ -42,7 +39,7 @@ const App = (props) => {
                         <Profile
                             /*profilePage={props.state.profilePage}
                             dispatch={props.dispatch}*/
-                            store={props.store}
+                            /*store={props.store}*/
                         />
                     }
                     />
