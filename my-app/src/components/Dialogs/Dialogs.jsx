@@ -5,32 +5,26 @@ import Message from "./Message/Message";
 import {onMessageChangeActionCreator, sendMessageActionCreator} from "../../redux/dialogs-reducer";
 
 
-
 const Dialogs = (props) => {
 
-    let dialogsArray = props.dialogsPage.dialogs.map((dialog, i) => {
+    let dialogsArray = props.dialogs.map((dialog, i) => {
         return <Dialog key={i} name={dialog.name} id={dialog.id}/>
     })
 
-    let messagesArray = props.dialogsPage.messages.map((message, i) => {
+    let messagesArray = props.messages.map((message, i) => {
         return <Message key={i} id={message.id} message={message.message}/>
     })
 
 
-
-
     let onMessageChange = (e) => {
         let valueText = e.target.value;//получаем значение инпута
-        let action = onMessageChangeActionCreator(valueText);
-        props.dispatch(action);//запускаем метод dispatch в качестве аргумента тип action и значение из инпута в свойство newText
+        props.onMessageChange(valueText);
+
     }
 
-    let sendMessage = () => {
-        let action = sendMessageActionCreator();
-        props.dispatch(action)
+    let onSendMessage = () => {
+        props.onSendMessage()
     }
-
-
 
 
     return (
@@ -45,8 +39,8 @@ const Dialogs = (props) => {
                     {messagesArray}
                 </ul>
 
-                <textarea onChange={onMessageChange} value={props.dialogsPage.newMessage} className={classes.textarea}/>
-                <button onClick={sendMessage} className={classes.btn}>Send message</button>
+                <textarea onChange={onMessageChange} value={props.newMessage} className={classes.textarea}/>
+                <button onClick={onSendMessage} className={classes.btn}>Send message</button>
 
 
             </div>

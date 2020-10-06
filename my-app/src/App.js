@@ -9,6 +9,7 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
 import {sendMessage, updateMessageText} from "./redux/store";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
 
 
 const App = (props) => {
@@ -28,17 +29,20 @@ const App = (props) => {
                         <Route path="/settings" component={Settings}/>*/}
 
                     <Route path="/dialogs" render={() =>
-                        <Dialogs
-                            dispatch={props.dispatch}
-                            dialogsPage={props.state.dialogsPage}
+                        <DialogsContainer
+                            /*dispatch={props.dispatch}
+                            dialogsPage={props.state.dialogsPage}*/
+                            store={props.store}
+
                         />
                     }
                     />
 
                     <Route path="/profile" render={() =>
                         <Profile
-                            profilePage={props.state.profilePage}
-                            dispatch={props.dispatch}
+                            /*profilePage={props.state.profilePage}
+                            dispatch={props.dispatch}*/
+                            store={props.store}
                         />
                     }
                     />

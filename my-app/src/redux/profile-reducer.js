@@ -26,7 +26,7 @@ const profileReducer = (state = initialState, action) => {
 
             state.myPosts.push(newPost);
             state.newPostText = '';
-            return state; //если есть return, break можно не использовать
+            return state; //если есть return,yar break можно не использовать
 
         default:
             return state;
