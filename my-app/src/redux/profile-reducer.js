@@ -14,20 +14,25 @@ let initialState = {
 const profileReducer = (state = initialState, action) => {
 
     switch(action.type) {
-        case UPDATE_NEW_POST_TEXT:
-            state.newPostText = action.newText;
-            return state; //если есть return, break можно не использовать
-        case ADD_POST:
+        case UPDATE_NEW_POST_TEXT: {
+            let stateCopy = {...state}
+            stateCopy.newPostText = action.newText;
+            return stateCopy; //если есть return, break можно не использовать
+        }
+        case ADD_POST: {
+            let stateCopy = {...state}
             let newPost = {
                 id: 5,
                 message: state.newPostText,
                 likes: 0,
             };
 
-            state.myPosts.push(newPost);
-            state.newPostText = '';
-            return state; //если есть return,yar break можно не использовать
+            stateCopy.myPosts = [...state.myPosts];
+            stateCopy.myPosts.push(newPost);
 
+            stateCopy.newPostText = '';
+            return stateCopy; //если есть return,yar break можно не использовать
+        }
         default:
             return state;
     }
