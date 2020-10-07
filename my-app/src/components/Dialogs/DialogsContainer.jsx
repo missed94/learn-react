@@ -14,16 +14,14 @@ let mapStateToProps = (state) => {
 let mapDispatchToProps = (dispatch) => {
     return {
         onMessageChange: (valueText) => {
-            let action = onMessageChangeActionCreator(valueText);
-            dispatch(action);//запускаем метод dispatch в качестве аргумента тип action и значение из инпута в свойство newText
+            dispatch(onMessageChangeActionCreator(valueText));//запускаем метод dispatch в качестве аргумента тип action и значение из инпута в свойство newText
         },
         onSendMessage: () => {
-            let action = sendMessageActionCreator();
-            dispatch(action)
+            dispatch(sendMessageActionCreator())
         }
     }
 }
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps) (Dialogs);
+const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
 
 export default DialogsContainer;

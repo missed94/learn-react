@@ -19,25 +19,25 @@ let initialState = {
 
 const dialogsReducer = (state = initialState, action) => {
 
+    let stateCopy
+
     switch (action.type) {
         case UPDATE_MESSAGE_TEXT: {
-            let stateCopy = {...state};
-            stateCopy.newMessage = action.newText;//добавляем полученный текст в свойство newMessage объекта dialogsPage
-            return stateCopy;
+            return {
+                ...state,
+                newMessage: action.newText//добавляем введеный текст в свойство newMessage объекта dialogsPage
+            };
         }
         case SEND_MESSAGE: {
-            let stateCopy = {...state}
-
             let newMessage = { //добавляем значение свойства newMessage в свойство message нового промежуточного объекта
                 id: 10,
                 message: state.newMessage,
             }
-
-            stateCopy.messages = [...state.messages];
-            stateCopy.messages.push(newMessage); //далее пушим промежуточный объект в свойство messages объекта dialogsPage
-
-            stateCopy.newMessage = '';//обнуляем инпут
-            return stateCopy;
+            return {
+                ...state,
+                newMessage: '', //обнуляем инпут
+                messages: [...state.messages, newMessage /*аналогично stateCopy.messages.push(newMessage);*/],
+            };
         }
         default:
             return state;
