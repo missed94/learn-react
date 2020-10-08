@@ -4,6 +4,8 @@ import classes from "./User.module.scss";
 
 const User = (props) => {
 
+
+
    let onFollow = () => {
         let userId = props.user.id
         props.onFollow(userId)
