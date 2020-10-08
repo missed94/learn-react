@@ -9,6 +9,7 @@ const Users = (props) => {
     let getUsers = () => {
         if (props.users.length === 0) {
             axios.get("https://social-network.samuraijs.com/api/1.0/users")
+
                 .then(response => {
                     props.onSetUsers(response.data.items)
                 })
