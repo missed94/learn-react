@@ -9,7 +9,7 @@ import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../red
 const My_posts = (props) => {
 
     let postsArray = props.myPosts.map((post, i) => {
-        return <Post key={i} id={post.id} message={post.message} likes={post.likes}/>
+        return <Post key={post.id} message={post.message} likes={post.likes}/>
     })
 
 
