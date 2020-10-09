@@ -2,12 +2,18 @@
   margin-bottom: 100px;
 }
 
-a {
-  color:white;
+.item{
+  a {
+    color:white;
+  }
+}
+
+.item{
+  a.active {
+    color: black;
+  }
 }
 
 
-a.active {
-  color: black;
-}
+
 

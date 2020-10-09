@@ -1,10 +1,15 @@
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
 const SET_USERS = 'SET_USERS';
+const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+const SET_TOTAL_USERS_COUNT = 'SET_TOTAL_USERS_COUNT';
 
 
 let initialState = {
     users: [],
+    pageSize: 100,
+    totalCount: 0,
+    currentPage: 1
 }
 
 
@@ -26,7 +31,7 @@ const usersReducer = (state = initialState, action) => {
         case UNFOLLOW: {
             return {
                 ...state,
-                users: state.users.map(user => {
+                users: state.users.map(user => { //альтернатива копиованию этого же массива
                     if (user.id === action.userId) {
                         return {...user, followed: false}
                     }
@@ -38,7 +43,21 @@ const usersReducer = (state = initialState, action) => {
         case SET_USERS: {
             return {
                 ...state,
-                users: [...state.users, ...action.users]
+                users: action.users
+            }
+        }
+
+        case SET_CURRENT_PAGE: {
+            return {
+                ...state,
+                currentPage: action.pageNumber
+            }
+        }
+
+        case SET_TOTAL_USERS_COUNT: {
+            return {
+                ...state,
+                totalCount: action.totalCount
             }
         }
 
@@ -54,5 +73,7 @@ const usersReducer = (state = initialState, action) => {
 export const followActionCreator = (userId) => ({type: FOLLOW, userId});
 export const unfollowActionCreator = (userId) => ({type: UNFOLLOW, userId});
 export const setUsersActionCreator = (users) => ({type: SET_USERS, users});
+export const setCurrentPageActionCreator = (pageNumber) => ({type: SET_CURRENT_PAGE, pageNumber})
+export const setTotalUsersCount = (totalCount) => ({type: SET_TOTAL_USERS_COUNT, totalCount})
 
 export default usersReducer

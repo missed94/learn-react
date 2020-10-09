@@ -34,18 +34,18 @@ const User = (props) => {
                <div className={classes.desc}>
                    <div className={classes.nameStatus}>
                        <h4 className={classes.fullName}>
-                           {props.user.name}
+                          Name:{` ${props.user.name}`}
                        </h4>
                        <p className={classes.status}>
-                           {props.user.status}
+                           Status:{` ${props.user.status}`}
                        </p>
                    </div>
                    <div className={classes.location__wrap}>
                        <div className={classes.country}>
-                           Страна:{/*{props.user.location.country}*/}
+                           Country:{/*{` ${props.user.location.country}`}*/}
                        </div>
                        <div className={classes.city}>
-                           Город:{/*{props.user.location.city}*/}
+                           City:{/*{` ${props.user.location.city}`}*/}
 
 
 

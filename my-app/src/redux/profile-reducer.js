@@ -29,7 +29,7 @@ const profileReducer = (state = initialState, action) => {
 
             return { //если есть return, break можно не использовать
                 ...state,
-                myPosts: [...state.myPosts, newPost],
+                myPosts: [newPost, ...state.myPosts ],
                 newPostText: ''
             }
         }
