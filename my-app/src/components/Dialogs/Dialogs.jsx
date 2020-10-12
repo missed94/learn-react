@@ -8,7 +8,7 @@ import {onMessageChangeActionCreator, sendMessageActionCreator} from "../../redu
 const Dialogs = (props) => {
 
     let dialogsArray = props.dialogs.map((dialog, i) => {
-        return <Dialog key={dialog.id} name={dialog.name}/>
+        return <Dialog key={dialog.id} name={dialog.name} id={dialog.id}/>
     })
 
     let messagesArray = props.messages.map((message, i) => {
