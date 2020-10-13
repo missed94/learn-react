@@ -1,8 +1,18 @@
 .headerComponent {
   grid-area: header;
   background-color: green;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .headerComponent img {
   height: 50px;
   width: 50px;
+}
+
+.login__container {
+
+}
+.login__link {
+  color: #222222;
 }
