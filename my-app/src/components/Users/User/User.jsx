@@ -1,18 +1,20 @@
 import React from "react";
 import classes from "./User.module.scss";
 import {NavLink} from "react-router-dom";
+import * as axios from "axios";
+import {followUnfollowAPI} from "../../../api/api";
+import {getFollow, toggleFollowingInProgress} from "../../../redux/users-reducer";
 
 
 const User = (props) => {
 
 
     let onFollow = () => {
-        let userId = props.user.id
-        props.follow(userId)
+        props.getFollow(props.user.id)
     }
     let onUnfollow = () => {
-        let userId = props.user.id
-        props.unfollow(userId)
+        props.getUnfollow(props.user.id)
+
     }
 
 
@@ -31,8 +33,8 @@ const User = (props) => {
 
                     </div>
                     {props.user.followed
-                        ? <button className={classes.button} onClick={onUnfollow}> unfollow </button>
-                        : <button className={classes.button} onClick={onFollow}> follow </button>
+                        ? <button disabled={props.followingInProgress.some(id => id === props.user.id)} className={classes.button} onClick={onUnfollow}> unfollow </button>
+                        : <button disabled={props.followingInProgress.some(id => id === props.user.id)} className={classes.button} onClick={onFollow}> follow </button>
                     }
 
                 </div>

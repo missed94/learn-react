@@ -24,6 +24,14 @@
   border: 1px solid #3c7fe7;
 }
 
+.button {
+  &:disabled {
+    background-color: #c0c9dc;
+    border: 1px solid #999da1;
+
+  }
+}
+
 .img_wrap {
   img {
     width: 40px;

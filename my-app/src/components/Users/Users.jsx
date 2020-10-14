@@ -1,6 +1,7 @@
 import React from "react";
 import User from "./User/User";
 import classes from "./Users.module.scss"
+import {getFollow, getUnfollow, toggleFollowingInProgress} from "../../redux/users-reducer";
 
 
 
@@ -10,10 +11,10 @@ const Users = (props) => {
 
     let pagesCount = Math.ceil(props.totalCount / props.pageSize)
 
-    let pages = [];
+    let pageNumbers = [];
 
     for (let i = 1; i <= pagesCount; i++) {
-        pages.push(i);
+        pageNumbers.push(i);
     }
 
     let usersArray = props.users.map((user, index) => {
@@ -21,8 +22,10 @@ const Users = (props) => {
             <User
                 key={user.id}
                 user={user}
-                follow={props.follow}
-                unfollow={props.unfollow}
+                getFollow={props.getFollow}
+                getUnfollow={props.getUnfollow}
+                toggleFollowingInProgress={props.toggleFollowingInProgress}
+                followingInProgress={props.followingInProgress}
             />
         )
     })
@@ -30,15 +33,15 @@ const Users = (props) => {
     return (
         <div className={classes.usersComponent}>
             <ul className={classes.pagination}>
-                {pages.map(page => {
+                {pageNumbers.map(pageNumber => {
                     return (
                         <li className={classes.pagination__item}>
-                            <a onClick={() => {props.pageChanged(page)}}
+                            <a onClick={() => {props.pageChanged(pageNumber)}}
                                className={
-                                   props.currentPage === page
+                                   props.currentPage === pageNumber
                                        ? classes.pagination__link_active
                                        : classes.pagination__link}>
-                                {page}
+                                {pageNumber}
                             </a>
                         </li>
                     )
