@@ -3,9 +3,7 @@ import {connect} from "react-redux";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 import {
-    follow,
     setCurrentPage,
-    unfollow,
     toggleFollowingInProgress,
     getUsers, getFollow, getUnfollow
 } from "../../redux/users-reducer";

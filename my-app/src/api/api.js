@@ -37,10 +37,19 @@ export const followUnfollowAPI = {
 
 export const profileAPI = {
     getProfile(id) {
-        return instance.get(`/profile/${id}`)
+        return instance.get(`profile/${id}`)
             .then(response => {
                 return response.data
             });
+    }
+}
+
+export const loginAPI = {
+    getAuthUserData() {
+        return instance.get(`auth/me`)
+            .then(response => {
+                return response.data
+            })
     }
 }
 
