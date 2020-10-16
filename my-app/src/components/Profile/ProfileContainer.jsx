@@ -12,10 +12,11 @@ import {withRouter} from "react-router-dom";
 class ProfileContainer extends React.Component  {
 
     componentDidMount() {
-        let urlProfileId = this.props.match.params.userId
+        let urlProfileId = this.props.match.params.userId  //такой сложный путь связан с withRouter
         if (!urlProfileId) {
             urlProfileId = 2
         }
+        debugger
         this.props.getProfile(urlProfileId)
     }
 

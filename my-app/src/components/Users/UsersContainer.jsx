@@ -15,6 +15,7 @@ class UsersContainer extends React.Component {
 
     componentDidMount() { //жизненный цикл, встроенный объект
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
+        debugger
     }
 
     pageChanged = (pageNumber) => {
