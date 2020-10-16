@@ -1,9 +1,7 @@
 import React from "react";
 import classes from "./User.module.scss";
 import {NavLink} from "react-router-dom";
-import * as axios from "axios";
-import {followUnfollowAPI} from "../../../api/api";
-import {getFollow, toggleFollowingInProgress} from "../../../redux/users-reducer";
+
 
 
 const User = (props) => {
@@ -33,8 +31,11 @@ const User = (props) => {
 
                     </div>
                     {props.user.followed
-                        ? <button disabled={props.followingInProgress.some(id => id === props.user.id)} className={classes.button} onClick={onUnfollow}> unfollow </button>
-                        : <button disabled={props.followingInProgress.some(id => id === props.user.id)} className={classes.button} onClick={onFollow}> follow </button>
+                        ? <button
+                            disabled={props.followingInProgress.some(id => id === props.user.id)} //если хоть одна id из массива равна id пользлвателя при нажатии то ее и disabl'и
+                            className={classes.button} onClick={onUnfollow}> unfollow </button>
+                        : <button disabled={props.followingInProgress.some(id => id === props.user.id)}
+                                  className={classes.button} onClick={onFollow}> follow </button>
                     }
 
                 </div>

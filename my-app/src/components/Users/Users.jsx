@@ -1,7 +1,6 @@
 import React from "react";
 import User from "./User/User";
 import classes from "./Users.module.scss"
-import {getFollow, getUnfollow, toggleFollowingInProgress} from "../../redux/users-reducer";
 
 
 

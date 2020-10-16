@@ -74,12 +74,12 @@ const usersReducer = (state = initialState, action) => {
             }
         }
 
-        case TOGGLE_IS_FOLLOWING_PROGRESS: {
+        case TOGGLE_IS_FOLLOWING_PROGRESS: { //блокировка кнопки при нажатии follow/unfollow
             return {
                 ...state,
-                followingInProgress: action.isFetching
+                followingInProgress: action.isFetching // если isFetching === true
                     ? [...state.followingInProgress, action.userId]
-                    : [state.followingInProgress.filter(id => id !== action.userId)] //filter уже вернет новый массив
+                    : [state.followingInProgress.filter(id => id !== action.userId)] //filter уже вернет новый массив..добавляем только те id которая не равны id из action'а
             }
         }
 
