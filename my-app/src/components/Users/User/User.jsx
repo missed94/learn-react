@@ -41,10 +41,10 @@ const User = (props) => {
                 <div className={classes.desc}>
                     <div className={classes.nameStatus}>
                         <h4 className={classes.fullName}>
-                            Name:{` ${props.user.name}`}
+                            Name: <div>{` ${props.user.name}`}</div>
                         </h4>
                         <p className={classes.status}>
-                            Status:{` ${props.user.status}`}
+                            Status: <div className={classes.status__text}>{` ${props.user.status}`}</div>
                         </p>
                     </div>
                     <div className={classes.location__wrap}>

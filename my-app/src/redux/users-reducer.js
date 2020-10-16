@@ -106,7 +106,12 @@ export const getUsers = (currentPage, pageSize) => {
    return (dispatch) => {
 
         dispatch(toggleIsFetching(true));//circle of loading on
-        usersAPI.getUsers(currentPage, pageSize)
+       if (currentPage !== 1) {
+           dispatch(setCurrentPage(currentPage))
+       } else {
+           dispatch(setCurrentPage(1))
+       }
+       usersAPI.getUsers(currentPage, pageSize)
             .then(data => {
                 dispatch(setUsers(data.items));
                 dispatch(setTotalUsersCount(data.totalCount));
