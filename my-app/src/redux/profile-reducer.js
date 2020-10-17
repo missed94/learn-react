@@ -3,7 +3,7 @@ import {profileAPI} from "../api/api";
 const UPDATE_NEW_POST_TEXT = 'UPDATE-NEW-POST-TEXT';
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
-
+const SET_USER_STATUS = 'SET_USER_STATUS'
 
 
 let initialState = {
@@ -13,11 +13,12 @@ let initialState = {
     ],
     newPostText: "",
     profile: null,
+    status: "",
 }
 
 const profileReducer = (state = initialState, action) => {
 
-    switch(action.type) {
+    switch (action.type) {
         case UPDATE_NEW_POST_TEXT: {
             return { //если есть return, break можно не использовать
                 ...state,
@@ -33,7 +34,7 @@ const profileReducer = (state = initialState, action) => {
 
             return { //если есть return, break можно не использовать
                 ...state,
-                myPosts: [newPost, ...state.myPosts ],
+                myPosts: [newPost, ...state.myPosts],
                 newPostText: ''
             }
         }
@@ -42,6 +43,13 @@ const profileReducer = (state = initialState, action) => {
             return {
                 ...state,
                 profile: action.profile
+            }
+        }
+
+        case SET_USER_STATUS: {
+            return {
+                ...state,
+                status: action.status
             }
         }
 
@@ -66,12 +74,37 @@ export const setUserProfile = (profile) => ({
     profile
 })
 
+export const setUserStatus = (status) => ({
+    type: SET_USER_STATUS,
+    status
+})
+
 
 export const getProfile = (id) => {
     return (dispatch) => {
         profileAPI.getProfile(id)
             .then(data => {
                 dispatch(setUserProfile(data))
+            })
+
+    }
+}
+
+export const getUserStatus = (id) => {
+    return (dispatch) => {
+        profileAPI.getStatus(id)
+            .then(data => {
+                dispatch(setUserStatus(data))
+            })
+
+    }
+}
+
+export const updateUserStatus = (status) => {
+    return (dispatch) => {
+        profileAPI.updateStatus(status)
+            .then(data => {
+                if (data.resultCode === 0) dispatch(setUserStatus(status))
             })
 
     }

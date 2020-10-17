@@ -1,0 +1,12 @@
+.profileStatusComponent {
+  margin-bottom: 30px;
+}
+
+.status__wrap {
+  span {
+    cursor: pointer;
+    &:hover {
+      background-color: blue;
+    }
+  }
+}
