@@ -1,5 +1,4 @@
 import React from "react";
-import classes from "./Header.module.scss"
 import Header from "./Header";
 import {connect} from "react-redux";
 import {getAuthUserData} from "../../redux/auth-reducer";

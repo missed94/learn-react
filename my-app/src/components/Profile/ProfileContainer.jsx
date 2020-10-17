@@ -4,14 +4,14 @@ import Profile from "./Profile";
 import {connect} from "react-redux";
 import {getProfile} from "../../redux/profile-reducer";
 import {withRouter} from "react-router-dom";
+import {withAuthRedirect} from "../hoc/withAuthRedirect";
+import {compose} from "redux";
 
 
-
-
-class ProfileContainer extends React.Component  {
+class ProfileContainer extends React.Component {
 
     componentDidMount() {
-        let urlProfileId = this.props.match.params.userId
+        let urlProfileId = this.props.match.params.userId  //такой сложный путь связан с withRouter
         if (!urlProfileId) {
             urlProfileId = 2
         }
@@ -19,6 +19,7 @@ class ProfileContainer extends React.Component  {
     }
 
     render() {
+
         return (
             <div className={classes.profileComponent}>
                 <Profile
@@ -30,14 +31,19 @@ class ProfileContainer extends React.Component  {
 
 };
 
+
 let mapStateToProps = (state) => ({
-    profile: state.profilePage.profile
+    profile: state.profilePage.profile,
 })
 
-let WithUrlProfileContainer = withRouter(ProfileContainer); // withRouter закидывает в компоненты данные из URL
 
-export default connect(mapStateToProps,
-    {
-        getProfile,
-    }
-    ) (WithUrlProfileContainer);
+export default compose(
+    connect(mapStateToProps,
+        {
+            getProfile,
+        }
+    ),
+    withRouter,
+    withAuthRedirect
+)
+(ProfileContainer)

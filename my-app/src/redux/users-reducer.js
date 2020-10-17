@@ -74,12 +74,12 @@ const usersReducer = (state = initialState, action) => {
             }
         }
 
-        case TOGGLE_IS_FOLLOWING_PROGRESS: {
+        case TOGGLE_IS_FOLLOWING_PROGRESS: { //блокировка кнопки при нажатии follow/unfollow
             return {
                 ...state,
-                followingInProgress: action.isFetching
+                followingInProgress: action.isFetching // если isFetching === true
                     ? [...state.followingInProgress, action.userId]
-                    : [state.followingInProgress.filter(id => id !== action.userId)] //filter уже вернет новый массив
+                    : [state.followingInProgress.filter(id => id !== action.userId)] //filter уже вернет новый массив..добавляем только те id которая не равны id из action'а
             }
         }
 
@@ -106,7 +106,12 @@ export const getUsers = (currentPage, pageSize) => {
    return (dispatch) => {
 
         dispatch(toggleIsFetching(true));//circle of loading on
-        usersAPI.getUsers(currentPage, pageSize)
+       if (currentPage !== 1) {
+           dispatch(setCurrentPage(currentPage))
+       } else {
+           dispatch(setCurrentPage(1))
+       }
+       usersAPI.getUsers(currentPage, pageSize)
             .then(data => {
                 dispatch(setUsers(data.items));
                 dispatch(setTotalUsersCount(data.totalCount));

@@ -1,27 +1,27 @@
 import React from "react";
-import {onMessageChangeActionCreator, sendMessageActionCreator} from "../../redux/dialogs-reducer";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
+import {onMessageChange, onSendMessage} from "../../redux/dialogs-reducer";
+import {withAuthRedirect} from "../hoc/withAuthRedirect";
+import {compose} from "redux";
+
+
 
 let mapStateToProps = (state) => {
+
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
-        newMessage: state.dialogsPage.newMessage
+        newMessage: state.dialogsPage.newMessage,
     }
 }
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        onMessageChange: (valueText) => {
-            dispatch(onMessageChangeActionCreator(valueText));//запускаем метод dispatch в качестве аргумента тип action и значение из инпута в свойство newText
-        },
-        onSendMessage: () => {
-            dispatch(sendMessageActionCreator())
-        }
-    }
-}
+export default compose(
+    connect(mapStateToProps, {
 
-const DialogsContainer = connect(mapStateToProps, mapDispatchToProps)(Dialogs);
+            onMessageChange,
+            onSendMessage
+        }),
 
-export default DialogsContainer;
+    withAuthRedirect //hoc redirect'а (если не авторизован скидывает на логин)
+)(Dialogs);

@@ -3,6 +3,7 @@ import classes from "./Dialogs.module.scss";
 import Dialog from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {onMessageChangeActionCreator, sendMessageActionCreator} from "../../redux/dialogs-reducer";
+import {Redirect} from "react-router-dom";
 
 
 const Dialogs = (props) => {
@@ -26,6 +27,7 @@ const Dialogs = (props) => {
         props.onSendMessage()
     }
 
+    if (!props.isAuth) return <Redirect to="/login"/>
 
     return (
         <div className={classes.dialogsComponent}>
