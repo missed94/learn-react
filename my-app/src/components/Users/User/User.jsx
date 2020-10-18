@@ -44,9 +44,9 @@ const User = (props) => {
                         <h4 className={classes.fullName}>
                             Name: <div>{` ${props.user.name}`}</div>
                         </h4>
-                        <p className={classes.status}>
+                        <div className={classes.status}>
                             Status: <div className={classes.status__text}>{` ${props.user.status}`}</div>
-                        </p>
+                        </div>
                     </div>
                     <div className={classes.location__wrap}>
                         <div className={classes.country}>
