@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./My_posts.module.scss"
 import Post from "./Post/Post";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
+import NewPostReduxForm from "./NewPostForm/NewPostForm";
 
 
 
@@ -13,28 +13,15 @@ const My_posts = (props) => {
     })
 
 
-
-    let onAddPost = () => {
-        props.addPost()
-       /*let action = addPostActionCreator()
-        props.dispatch(action);*/
-    }
-
-    let onPostChange = (e) => {
-        let text = e.target.value
-        /*let action = updateNewPostTextActionCreator(text)
-        props.dispatch(action)*/
-        props.updateNewPostText(text)
+    let addNewPost = (values) => {
+       props.addPost(values.post)
     }
 
     return (
         <div className={classes.MyPostsComponent}>
             <h3>My posts</h3>
             <div>
-                <textarea onChange={onPostChange}  className={classes.textarea}
-                          value={props.newPostText}/>
-                <button onClick={onAddPost} className={classes.addBtn}>Add post
-                </button>
+                <NewPostReduxForm onSubmit={addNewPost}/>
             </div>
             <ul className={classes.posts}>
                 {postsArray}

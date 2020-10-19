@@ -32,9 +32,9 @@ const Users = (props) => {
     return (
         <div className={classes.usersComponent}>
             <ul className={classes.pagination}>
-                {pageNumbers.map(pageNumber => {
+                {pageNumbers.map((pageNumber,index) => {
                     return (
-                        <li className={classes.pagination__item}>
+                        <li key={index} className={classes.pagination__item}>
                             <a onClick={() => {props.pageChanged(pageNumber)}}
                                className={
                                    props.currentPage === pageNumber

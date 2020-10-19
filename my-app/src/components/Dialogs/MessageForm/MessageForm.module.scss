@@ -1,0 +1,15 @@
+.sendForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.textarea {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.btn {
+  display: inline-block;
+  width: 15%;
+  align-self: flex-end;
+}

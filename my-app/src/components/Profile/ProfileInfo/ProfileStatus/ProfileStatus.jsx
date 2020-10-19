@@ -1,5 +1,6 @@
 import React from "react";
 import classes from "./ProfileStatus.module.scss"
+import StatusReduxForm from "./StatusForm/StatusForm";
 
 class ProfileStatus extends React.Component {
 
@@ -18,14 +19,10 @@ class ProfileStatus extends React.Component {
         this.setState({
             editMode: false
         })
-        this.props.updateUserStatus(this.state.status)
+
     }
 
-    onStatusChange = (e) => {
-        this.setState({
-            status: e.currentTarget.value
-        })
-    }
+
 
     componentDidUpdate(prevProps, prevState) { //процесс синхронизации локального стейта с глобальным
         if (prevProps.status !== this.props.status) {
@@ -35,6 +32,11 @@ class ProfileStatus extends React.Component {
         }
     }
 
+    sendStatus = (values) => {
+        this.props.updateUserStatus(values.status)
+        this.deactivateEditMode()
+    }
+
     render() {
         return (
             <div className={classes.profileStatusComponent}>
@@ -42,10 +44,10 @@ class ProfileStatus extends React.Component {
                     ? <div className={classes.status__wrap}>
                         <span onClick={this.activateEditMode}>{this.props.status || "введите статус"}</span>
                     </div>
-                    : <div>
+                    : <StatusReduxForm onSubmit={this.sendStatus} deactivateEditMode={this.deactivateEditMode}/>/*<form>
                         <input autoFocus onChange={this.onStatusChange} onBlur={this.deactivateEditMode}
                                value={this.state.status}/>
-                    </div>
+                    </form>*/
                 }
             </div>
         )
