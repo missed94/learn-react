@@ -8,7 +8,7 @@ import {required} from "../../../utils/validators/validators";
 const LoginForm = (props) => {
     return (
         <div className={classes.loginFormComponent}>
-            <form onSubmit={props.handleSubmit}>
+            <form className={classes.login__form} onSubmit={props.handleSubmit}>
                 <div>
                     <Field
                         type="text"
@@ -37,6 +37,8 @@ const LoginForm = (props) => {
 
                     <span>remember me</span>
                 </label>
+                {props.error && <div className={classes.form__summaryError}> {props.error} </div>
+                }
                 <div>
                     <button type="submit">Login</button>
                 </div>
