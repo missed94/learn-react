@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Profile.module.scss";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getProfile, getUserStatus, updateUserStatus} from "../../redux/profile-reducer";
+import {getProfile, getUserStatus, updateUserStatus} from "../../redux/reducers/profile-reducer";
 import {withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";

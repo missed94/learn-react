@@ -3,8 +3,7 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
-import {onSendMessage} from "../../redux/dialogs-reducer";
-
+import {onSendMessage} from "../../redux/reducers/dialogs-reducer";
 
 
 let mapStateToProps = (state) => {
@@ -17,10 +16,9 @@ let mapStateToProps = (state) => {
 }
 
 export default compose(
-    connect(mapStateToProps, {
-
+    connect(mapStateToProps,
+        {
             onSendMessage
         }),
-
     withAuthRedirect //hoc redirect'а (если не авторизован скидывает на логин)
 )(Dialogs);
