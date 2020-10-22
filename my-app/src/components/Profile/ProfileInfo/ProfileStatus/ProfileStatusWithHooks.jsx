@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import classes from "./ProfileStatus.module.scss"
 import StatusReduxForm from "./StatusForm/StatusForm";
 
@@ -6,6 +6,10 @@ const ProfileStatusWithHooks = (props) => {
 
     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(props.status); // деструктуризация массива, useState возвращает массив "[true, () => {}]", пременные editMode и setEditMode присваиваются соответственно
+
+    useEffect( () => { //метод который вызывает переданную в него функцию уже после отрисовки всех компонентов
+        setStatus(props.status)
+    }, [props.status]) // зависимость, useEffect вызывается только тогда, когда меняется props.status
 
     const activateEditMode = () => {
         setEditMode(true)
