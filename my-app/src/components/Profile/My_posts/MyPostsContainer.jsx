@@ -1,7 +1,8 @@
 import React from "react";
-import {addPost} from "../../../redux/reducers/profile-reducer";
+import {addPost, removePost} from "../../../redux/reducers/profile-reducer";
 import My_posts from "./My_posts";
 import {connect} from "react-redux";
+import {compose} from "redux";
 
 
 
@@ -13,6 +14,9 @@ let mapStateToProps = (state) => {
 }
 
 
-const MyPostsContainer = connect(mapStateToProps, {addPost}) (My_posts)
+const MyPostsContainer = compose(
+    connect(mapStateToProps, {addPost, removePost}),
+    React.memo //альтернатитва pureComponent для функциональной компоненты
+)(My_posts)
 
 export default MyPostsContainer
