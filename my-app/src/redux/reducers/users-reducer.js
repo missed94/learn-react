@@ -26,7 +26,7 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOW: {
             return {
                 ...state,
-                users: mappingArraysInObject(
+                users: mappingArraysInObject( // смотри helpers.js
                     state.users,
                     'id',
                     action.userId,
