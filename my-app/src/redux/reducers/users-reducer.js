@@ -1,4 +1,5 @@
 import {followUnfollowAPI, usersAPI} from "../../api/api";
+import {mappingArraysInObject} from "../../utils/helpers/helpers";
 
 const FOLLOW = 'FOLLOW';
 const UNFOLLOW = 'UNFOLLOW';
@@ -25,56 +26,62 @@ const usersReducer = (state = initialState, action) => {
         case FOLLOW: {
             return {
                 ...state,
-                users: state.users.map(user => {
-                    if (user.id === action.userId) {
-                        return {...user, followed: true}
-                    }
-                    return user
-                })
+                users: mappingArraysInObject(
+                    state.users,
+                    'id',
+                    action.userId,
+                    {followed: true}
+                )
             }
         }
 
-        case UNFOLLOW: {
+        case
+        UNFOLLOW: {
             return {
                 ...state,
-                users: state.users.map(user => { //альтернатива копиованию этого же массива
-                    if (user.id === action.userId) {
-                        return {...user, followed: false}
-                    }
-                    return user
-                })
+                users: mappingArraysInObject(
+                    state.users,
+                    'id',
+                    action.userId,
+                    {followed: false}
+                )
             }
         }
 
-        case SET_USERS: {
+        case
+        SET_USERS: {
             return {
                 ...state,
                 users: action.users
             }
         }
 
-        case SET_CURRENT_PAGE: {
+        case
+        SET_CURRENT_PAGE: {
             return {
                 ...state,
                 currentPage: action.pageNumber
             }
         }
 
-        case SET_TOTAL_USERS_COUNT: {
+        case
+        SET_TOTAL_USERS_COUNT: {
             return {
                 ...state,
                 totalCount: action.totalCount
             }
         }
 
-        case TOGGLE_IS_FETCHING: {
+        case
+        TOGGLE_IS_FETCHING: {
             return {
                 ...state,
                 isFetching: action.isFetching
             }
         }
 
-        case TOGGLE_IS_FOLLOWING_PROGRESS: { //блокировка кнопки при нажатии follow/unfollow
+        case
+        TOGGLE_IS_FOLLOWING_PROGRESS: { //блокировка кнопки при нажатии follow/unfollow
             return {
                 ...state,
                 followingInProgress: action.isFetching // если isFetching === true
@@ -118,25 +125,25 @@ export const requestUsers = (currentPage, pageSize) => {
     }
 }
 
+const followUnfollowToggle = async (dispatch, userId, apiMethod, actionCreator) => {
+
+    dispatch(toggleFollowingInProgress(true, userId)) //disabled button
+    let data = await apiMethod(userId)
+    if (data.resultCode === 0) {
+        dispatch(actionCreator(userId))
+    }
+    dispatch(toggleFollowingInProgress(false, userId)) //enabled button
+}
+
 export const getFollow = (userId) => {
     return async (dispatch) => {
-        dispatch(toggleFollowingInProgress(true, userId)) //disabled button
-        let data = await followUnfollowAPI.getFollow(userId)
-        if (data.resultCode === 0) {
-            dispatch(follow(userId))
-        }
-        dispatch(toggleFollowingInProgress(false, userId)) //enabled button
+        followUnfollowToggle(dispatch, userId, followUnfollowAPI.getFollow.bind(followUnfollowAPI), follow)
     }
 }
 
 export const getUnfollow = (userId) => {
     return async (dispatch) => {
-        dispatch(toggleFollowingInProgress(true, userId)) //disabled button
-        let data = followUnfollowAPI.getUnfollow(userId)
-        if (data.resultCode === 0) {
-            dispatch(unfollow(userId))
-        }
-        dispatch(toggleFollowingInProgress(false, userId)) //enabled button
+        followUnfollowToggle(dispatch, userId, followUnfollowAPI.getUnfollow.bind(followUnfollowAPI), unfollow)
     }
 }
 
