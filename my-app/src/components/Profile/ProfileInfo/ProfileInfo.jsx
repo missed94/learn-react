@@ -7,6 +7,9 @@ import ProfileStatusWithHooks from "./ProfileStatus/ProfileStatusWithHooks";
 
 const ProfileInfo = ({profile, status, updateUserStatus}) => {
 
+    let defaultPhotoUrl = "https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"
+
+
     if (!profile) {
         return <Preloader />
     }
@@ -22,7 +25,7 @@ const ProfileInfo = ({profile, status, updateUserStatus}) => {
             <div className={classes.description}>
                 {
                     !profile.photos.large
-                    ? <img className={classes.avatar} src="https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png" alt=""/>
+                    ? <img className={classes.avatar} src={defaultPhotoUrl} alt=""/>
                     : <img className={classes.avatar} src={profile.photos.large} alt=""/>
                 }
                 <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus}/>
