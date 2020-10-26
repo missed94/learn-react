@@ -2,10 +2,10 @@ import React from "react";
 import classes from "./Pagination.module.scss"
 
 
-const Pagination = (props) => {
+const Pagination = ({totalCount, pageSize, pageChanged, currentPage}) => {
 
 
-    let pagesCount = Math.ceil(props.totalCount / props.pageSize)
+    let pagesCount = Math.ceil(totalCount / pageSize)
 
     let pageNumbers = [];
 
@@ -20,10 +20,10 @@ const Pagination = (props) => {
                     return (
                         <li key={index} className={classes.pagination__item}>
                             <a onClick={() => {
-                                props.pageChanged(pageNumber)
+                                pageChanged(pageNumber)
                             }}
                                className={
-                                   props.currentPage === pageNumber
+                                   currentPage === pageNumber
                                        ? classes.pagination__link_active
                                        : classes.pagination__link}>
                                 {pageNumber}

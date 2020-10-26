@@ -1,7 +1,7 @@
 import React from "react";
 import User from "./User/User";
 import classes from "./Users.module.scss"
-import Pagination from "./Pagination/Pagination";
+import Pagination from "../common/Pagination/Pagination";
 
 
 

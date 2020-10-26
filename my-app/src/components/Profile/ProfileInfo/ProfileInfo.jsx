@@ -1,14 +1,13 @@
 import React from "react";
 import classes from "./ProfileInfo.module.scss";
 import Preloader from "../../common/Preloader/Preloader";
-import ProfileStatus from "./ProfileStatus/ProfileStatus";
 import ProfileStatusWithHooks from "./ProfileStatus/ProfileStatusWithHooks";
 
 
 
-const ProfileInfo = (props) => {
+const ProfileInfo = ({profile, status, updateUserStatus}) => {
 
-    if (!props.profile) {
+    if (!profile) {
         return <Preloader />
     }
 
@@ -21,32 +20,36 @@ const ProfileInfo = (props) => {
                 />
             </div>
             <div className={classes.description}>
-                <img src={props.profile.photos.large} alt=""/>
-                <ProfileStatusWithHooks status={props.status} updateUserStatus={props.updateUserStatus}/>
+                {
+                    !profile.photos.large
+                    ? <img className={classes.avatar} src="https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png" alt=""/>
+                    : <img className={classes.avatar} src={profile.photos.large} alt=""/>
+                }
+                <ProfileStatusWithHooks status={status} updateUserStatus={updateUserStatus}/>
                 <div>
                     <h4>Name:</h4>
-                    {props.profile.fullName}
+                    {profile.fullName}
                 </div>
                 <div>
                     <h4>About me:</h4>
-                    {props.profile.aboutMe}
+                    {profile.aboutMe}
                 </div>
                 <div>
                     <h4>Contacts:</h4>
                     <ul>
-                        <li>{props.profile.contacts.facebook}</li>
-                        <li>{props.profile.contacts.website}</li>
-                        <li>{props.profile.contacts.vk}</li>
-                        <li>{props.profile.contacts.twitter}</li>
-                        <li>{props.profile.contacts.instagram}</li>
-                        <li>{props.profile.contacts.youtube}</li>
-                        <li>{props.profile.contacts.github}</li>
-                        <li>{props.profile.contacts.mainLink}</li>
+                        <li>{profile.contacts.facebook}</li>
+                        <li>{profile.contacts.website}</li>
+                        <li>{profile.contacts.vk}</li>
+                        <li>{profile.contacts.twitter}</li>
+                        <li>{profile.contacts.instagram}</li>
+                        <li>{profile.contacts.youtube}</li>
+                        <li>{profile.contacts.github}</li>
+                        <li>{profile.contacts.mainLink}</li>
                     </ul>
                 </div>
                 <div>
                     <h4>Looking for a job: </h4>
-                    {props.profile.lookingForAJob ? <p>{props.profile.lookingForAJobDescription}</p> : null}
+                    {profile.lookingForAJob ? <p>{profile.lookingForAJobDescription}</p> : null}
                 </div>
 
 

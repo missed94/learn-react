@@ -10,7 +10,11 @@ const Header = (props) => {
       <div className={classes.login__container}>
 
           {props.isAuth
-              ? <div>{props.loginName} <button onClick={props.logout}>logout</button></div>
+              ? <div>
+                  <img className={classes.photo} src="https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png" alt=""/>
+                  <span>{props.loginName}</span>
+              <button onClick={props.logout}>logout</button>
+          </div>
               : <NavLink className={classes.login__link} to={`/login`}> Login
           </NavLink>}
 

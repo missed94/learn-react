@@ -3,12 +3,12 @@ import classes from"./Navigation.module.scss"
 import {NavLink} from "react-router-dom";
 
 
-const Navigation = () => {
+const Navigation = (props) => {
   return (
     <nav className={classes.navigationComponent}>
       <ul className={classes.list}>
         <li className={classes.item}>
-          <NavLink className={classes.link} activeClassName={classes.active} to="/profile">Profile</NavLink>
+          <NavLink className={classes.link} activeClassName={classes.active} to={`/profile/`}>Profile</NavLink>
         </li>
         <li className={classes.item}>
           <NavLink className={classes.link} activeClassName={classes.active} to="/dialogs">Messages</NavLink>

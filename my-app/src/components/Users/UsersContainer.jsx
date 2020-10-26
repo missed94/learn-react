@@ -17,16 +17,17 @@ import {
 class UsersContainer extends React.Component {
 
     componentDidMount() { //жизненный цикл, встроенный объект
-        this.props.requestUsers(this.props.currentPage, this.props.pageSize)
+        const {currentPage, pageSize} = this.props
+        this.props.requestUsers(currentPage, pageSize)
     }
 
     pageChanged = (pageNumber) => {
-        this.props.requestUsers(pageNumber, this.props.pageSize)
+        const {pageSize} = this.props
+        this.props.requestUsers(pageNumber, pageSize)
     }
 
 
     render() {
-
         return (
             <>
                 {this.props.isFetching
@@ -49,18 +50,6 @@ class UsersContainer extends React.Component {
 }
 
 
-/*let mapStateToProps = (state) => {
-    return {
-        users: state.usersPage.users,
-        pageSize: state.usersPage.pageSize,
-        totalCount: state.usersPage.totalCount,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
-        followingInProgress: state.usersPage.followingInProgress
-    }
-
-}*/
-
 let mapStateToProps = (state) => {
     return {
         users: getUsers(state),
@@ -73,34 +62,8 @@ let mapStateToProps = (state) => {
 
 }
 
-
-/*
-let mapDispatchToProps = (dispatch) => {
-    return {
-        onFollow: (userId) => {
-            dispatch(followActionCreator(userId))
-        },
-        onUnfollow: (userId) => {
-            dispatch(unfollowActionCreator(userId))
-        },
-        onSetCurrentPage: (page) => {
-            dispatch(setCurrentPageActionCreator(page))
-        },
-        onSetTotalUsersCount: (totalCount) => {
-            dispatch(setTotalUsersCount(totalCount))
-        },
-        onSetUsers: (users) => {
-            dispatch(setUsersActionCreator(users))
-        },
-        onToggleIsFetching: (isFetching) => {
-            dispatch(isFetchingActionCreator(isFetching))
-        }
-    }
-}
-*/
-
-
-export default connect(mapStateToProps,
+export default connect(
+    mapStateToProps,
     {
         toggleFollowingInProgress,
         requestUsers,
