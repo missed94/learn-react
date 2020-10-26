@@ -1,0 +1,17 @@
+.pagination {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px;
+  margin-left: -10px;
+}
+
+.pagination__link {
+  color: black;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.pagination__link_active {
+  font-weight: bold;
+  margin-left: 10px;
+}

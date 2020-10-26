@@ -5,10 +5,10 @@ import {Input} from "../../common/FormsControls/FormControls";
 import {required} from "../../../utils/validators/validators";
 
 
-const LoginForm = (props) => {
+const LoginForm = ({error, handleSubmit}) => {
     return (
         <div className={classes.loginFormComponent}>
-            <form className={classes.login__form} onSubmit={props.handleSubmit}>
+            <form className={classes.login__form} onSubmit={handleSubmit}>
                 <div>
                     <Field
                         type="text"
@@ -37,7 +37,7 @@ const LoginForm = (props) => {
 
                     <span>remember me</span>
                 </label>
-                {props.error && <div className={classes.form__summaryError}> {props.error} </div>
+                {error && <div className={classes.form__summaryError}> {error} </div>
                 }
                 <div>
                     <button type="submit">Login</button>

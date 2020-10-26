@@ -6,13 +6,13 @@ import {login} from "../../redux/reducers/auth-reducer";
 import {Redirect} from "react-router-dom";
 
 
-const Login = (props) => {
+const Login = ({login, isAuth}) => {
 
     const onSubmit = (formData) => {
-        props.login(formData.email, formData.password, formData.rememberMe)
+        login(formData.email, formData.password, formData.rememberMe)
     }
 
-    if (props.isAuth) return <Redirect to={"/profile"}/>
+    if (isAuth) return <Redirect to={"/profile"}/>
 
 
     return (
