@@ -10,7 +10,6 @@ let initialState = {
     login: null,
     isFetching: false,
     isAuth: false,
-
 }
 
 const authReducer = (state = initialState, action) => {
@@ -20,9 +19,7 @@ const authReducer = (state = initialState, action) => {
                 ...state,
                 ...action.data,
             }
-
         }
-
         default:
             return state
     }

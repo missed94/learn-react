@@ -5,16 +5,18 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
-import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import Login from "./components/Login/Login";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/reducers/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import store from "./redux/redux-store";
+import {withSuspense} from "./components/hoc/withSuspense";
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')); //ленивая загрузка компоненты
+const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const Login = React.lazy(() => import('./components/Login/Login'));
 
 
 class App extends React.Component {
@@ -37,21 +39,12 @@ class App extends React.Component {
                     <div className="app-wrapper-content">
                         <Route
                             path="/login"
-                            render={
-                                () => <Login/>
-                            }
+                            render={withSuspense(Login)}
                         />
-
-                        <Route path="/dialogs" render={() =>
-                            <DialogsContainer/>
-                        }
+                        <Route path="/dialogs" render={withSuspense(DialogsContainer)}
                         />
-
-                        <Route path="/profile/:userId?" render={() =>
-                            <ProfileContainer/>
-                        }
+                        <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}
                         />
-
                         <Route path="/Users" render={() =>
                             <UsersContainer/>
                         }
@@ -59,13 +52,9 @@ class App extends React.Component {
                         <Route path="/news" render={() => <News/>}/>
                         <Route path="/music" render={() => <Music/>}/>
                         <Route path="/settings" render={() => <Settings/>}/>
-
                     </div>
-
-
                 </div>
             </div>
-
         );
     }
 }
