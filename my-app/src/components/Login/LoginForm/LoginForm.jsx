@@ -2,7 +2,6 @@ import React from "react";
 import classes from "./LoginForm.module.scss"
 import {Field, reduxForm} from "redux-form";
 import {Input} from "../../common/FormsControls/FormControls";
-import {required} from "../../../utils/validators/validators";
 
 
 const LoginForm = ({error, handleSubmit}) => {
@@ -15,7 +14,6 @@ const LoginForm = ({error, handleSubmit}) => {
                         name={"email"}
                         placeholder={"email"}
                         component={Input}
-                        validate={[required]}
                     />
                 </div>
                 <div>
@@ -24,7 +22,6 @@ const LoginForm = ({error, handleSubmit}) => {
                         name={"password"}
                         placeholder={"password"}
                         component={Input}
-                        validate={[required]}
                     />
 
                 </div>

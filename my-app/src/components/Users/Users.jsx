@@ -24,10 +24,11 @@ const Users = (props) => {
     return (
         <div className={classes.usersComponent}>
             <Pagination
-                totalCount={props.totalCount}
+                totalItemsCount={props.totalItemsCount}
                 pageSize={props.pageSize}
                 pageChanged={props.pageChanged}
                 currentPage={props.currentPage}
+                portionSize={props.portionSize}
             />
             <ul className={classes.users__list}>
                 {usersArray}

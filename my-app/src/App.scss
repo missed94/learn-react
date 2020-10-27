@@ -3,6 +3,8 @@ ul li {
 }
 
 .app-wrapper-content {
+  display: flex;
+  flex-direction: column;
   grid-area: content;
   background-color: yellow;
 }

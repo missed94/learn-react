@@ -1,57 +1,49 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import classes from "./ProfileStatus.module.scss"
 import StatusReduxForm from "./StatusForm/StatusForm";
 
-class ProfileStatus extends React.Component {
+const ProfileStatus = (props) => {
 
-    state = {
-        editMode: false,
-        status: this.props.status
+    let [editMode, setEditMode] = useState(false);
+    let [status, setStatus] = useState(props.status); // деструктуризация массива, useState возвращает массив "[true, () => {}]", пременные editMode и setEditMode присваиваются соответственно
+
+    useEffect( () => { //метод который вызывает переданную в него функцию уже после отрисовки всех компонентов
+        setStatus(props.status)
+    }, [props.status]) // зависимость, useEffect вызывается только тогда, когда меняется props.status
+
+    const activateEditMode = () => {
+        setEditMode(true)
     }
 
-    activateEditMode = () => {
-        this.setState({
-            editMode: true
-        })
+    const deactivateEditMode = () => {
+        setEditMode(false)
+        props.updateUserStatus(status)
     }
 
-    deactivateEditMode = () => {
-        this.setState({
-            editMode: false
-        })
-
+    const onStatusChange = (e) => {
+        setStatus(e.target.value)
     }
 
+    return (
+        <div className={classes.profileStatusComponent}>
+            {
+                !editMode &&
+                <div className={classes.status__wrap}>
+                    <span onClick={activateEditMode}>{props.status || "введите статус"}</span>
+                </div>
+            }
+            {
+                editMode &&/* <StatusReduxForm onSubmit={sendStatus} defaultValue={status}/>*/
+            <form>
+                <input autoFocus onClick={activateEditMode} onChange={onStatusChange} onBlur={deactivateEditMode}
+                       value={status}/>
+                <button onClick={deactivateEditMode}>Save</button>
+            </form>
+            }
 
 
-    componentDidUpdate(prevProps, prevState) { //процесс синхронизации локального стейта с глобальным
-        if (prevProps.status !== this.props.status) {
-            this.setState({
-                status: this.props.status
-            })
-        }
-    }
-
-    sendStatus = (values) => {
-        this.props.updateUserStatus(values.status)
-        this.deactivateEditMode()
-    }
-
-    render() {
-        return (
-            <div className={classes.profileStatusComponent}>
-                {!this.state.editMode
-                    ? <div className={classes.status__wrap}>
-                        <span onClick={this.activateEditMode}>{this.props.status || "введите статус"}</span>
-                    </div>
-                    : <StatusReduxForm onSubmit={this.sendStatus} deactivateEditMode={this.deactivateEditMode}/>/*<form>
-                        <input autoFocus onChange={this.onStatusChange} onBlur={this.deactivateEditMode}
-                               value={this.state.status}/>
-                    </form>*/
-                }
-            </div>
-        )
-    }
+        </div>
+    )
 }
 
 export default ProfileStatus

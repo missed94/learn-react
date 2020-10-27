@@ -9,7 +9,7 @@ export const getPageSize = (state) => {
 }
 
 export const getTotalCount = (state) => {
-    return state.usersPage.totalCount;
+    return state.usersPage.totalItemsCount;
 }
 
 export const getCurrentPage = (state) => {
@@ -23,3 +23,6 @@ export const getFollowingInProgress = (state) => {
     return state.usersPage.followingInProgress;
 }
 
+export const getPortionSize = (state) => {
+    return state.usersPage.portionSize
+}

@@ -1,11 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import classes from "./Pagination.module.scss"
 
 
-const Pagination = ({totalCount, pageSize, pageChanged, currentPage}) => {
+const Pagination = ({totalItemsCount, pageSize, pageChanged, currentPage, portionSize = 10}) => {
 
-
-    let pagesCount = Math.ceil(totalCount / pageSize)
+    let pagesCount = Math.ceil(totalItemsCount / pageSize)
 
     let pageNumbers = [];
 
@@ -13,26 +12,44 @@ const Pagination = ({totalCount, pageSize, pageChanged, currentPage}) => {
         pageNumbers.push(i);
     }
 
+    let portionCount = Math.ceil(pagesCount / portionSize);
+    let [portionNumber, setPortionNumber] = useState(1);
+    let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
+    let rightPortionPageNumber = portionNumber * portionSize
     return (
-        <div className={classes.paginationComponent}>
-            <ul className={classes.pagination}>
-                {pageNumbers.map((pageNumber, index) => {
-                    return (
-                        <li key={index} className={classes.pagination__item}>
-                            <a onClick={() => {
-                                pageChanged(pageNumber)
-                            }}
-                               className={
-                                   currentPage === pageNumber
-                                       ? classes.pagination__link_active
-                                       : classes.pagination__link}>
-                                {pageNumber}
-                            </a>
-                        </li>
-                    )
-                })}
 
-            </ul>
+        <div className={classes.paginationComponent}>
+            <div className={classes.pagination}>
+                {
+                    portionNumber > 1 && <button className={`${classes.button} ${classes.prev__button}`} onClick={() => {setPortionNumber(portionNumber - 1)}}>PREV</button>
+                }
+
+                <ul className={classes.pagination__list}>
+                    {pageNumbers
+                        .filter(pageNumber => pageNumber >= leftPortionPageNumber && pageNumber <= rightPortionPageNumber)
+                        .map((pageNumber) => {
+                            return (
+                                <li className={classes.pagination__item}>
+                                    <a onClick={() => {
+                                        pageChanged(pageNumber)
+                                    }}
+                                       className={
+                                           currentPage === pageNumber
+                                               ? classes.pagination__link_active
+                                               : classes.pagination__link}>
+                                        {pageNumber}
+                                    </a>
+                                </li>
+                            )
+                        })}
+
+                </ul>
+
+                {
+                    portionNumber <  portionCount && <button className={`${classes.button} ${classes.next__button}`} onClick={() => {setPortionNumber(portionNumber + 1)}}>NEXT</button>
+                }
+            </div>
+
         </div>
     )
 }

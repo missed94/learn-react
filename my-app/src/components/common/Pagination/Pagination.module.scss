@@ -1,4 +1,16 @@
+.paginationComponent {
+  display: flex;
+  margin-bottom: 35px;
+}
+
 .pagination {
+  display: flex;
+  margin: 0 auto;
+  min-width: 380px;
+}
+
+
+.pagination__list {
   display: flex;
   flex-wrap: wrap;
   padding: 10px;
@@ -14,4 +26,7 @@
 .pagination__link_active {
   font-weight: bold;
   margin-left: 10px;
+}
+
+.button {
 }
