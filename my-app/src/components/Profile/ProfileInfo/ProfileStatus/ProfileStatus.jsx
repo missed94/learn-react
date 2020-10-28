@@ -12,7 +12,9 @@ const ProfileStatus = (props) => {
     }, [props.status]) // зависимость, useEffect вызывается только тогда, когда меняется props.status
 
     const activateEditMode = () => {
-        setEditMode(true)
+        if (props.isOwner) {
+            setEditMode(true)
+        }
     }
 
     const deactivateEditMode = () => {
@@ -29,7 +31,12 @@ const ProfileStatus = (props) => {
             {
                 !editMode &&
                 <div className={classes.status__wrap}>
-                    <span onClick={activateEditMode}>{props.status || "введите статус"}</span>
+                    <span className={props.isOwner ? classes.authUserStatus : classes.userStatus} onClick={activateEditMode}>{
+                        props.isOwner
+                            ? props.status || "введите статус"
+                            : props.status || null
+                    }
+                    </span>
                 </div>
             }
             {

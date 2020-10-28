@@ -3,10 +3,16 @@
 }
 
 .status__wrap {
-  span {
-    cursor: pointer;
-    &:hover {
-      background-color: blue;
-    }
+
+}
+
+.authUserStatus {
+  cursor: pointer;
+  &:hover {
+    background-color: blue;
   }
+}
+
+.userStatus {
+
 }

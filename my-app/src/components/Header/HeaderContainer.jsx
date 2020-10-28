@@ -17,5 +17,4 @@ let mapStateToProps = (state) => ({
 
 export default connect(mapStateToProps, {
     logout,
-    getProfile,
 }) (Header);

@@ -4,14 +4,19 @@ import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
 
 
-
-const ProfileInfo = ({profile, status, updateUserStatus}) => {
+const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto}) => {
 
     let defaultPhotoUrl = "https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"
 
 
+    const onMainPhotoSelected = (e) => {
+        if (e.currentTarget.files.length) {
+            savePhoto(e.currentTarget.files[0])
+        }
+    }
+
     if (!profile) {
-        return <Preloader />
+        return <Preloader/>
     }
 
     return (
@@ -23,12 +28,15 @@ const ProfileInfo = ({profile, status, updateUserStatus}) => {
                 />
             </div>
             <div className={classes.description}>
-                {
-                    !profile.photos.large
-                    ? <img className={classes.avatar} src={defaultPhotoUrl} alt=""/>
-                    : <img className={classes.avatar} src={profile.photos.large} alt=""/>
-                }
-                <ProfileStatus status={status} updateUserStatus={updateUserStatus}/>
+                <div className={classes.avatar__wrapper}>
+                    <div className={classes.avatar__container}>
+                        <div className={classes.avatar__imgWrapper}>
+                            <img className={classes.avatar} src={profile.photos.large || defaultPhotoUrl} alt=""/>
+                        </div>
+                        {isOwner && <input className={classes.addPhoto__btn} onChange={onMainPhotoSelected} type={"file"}/>}
+                    </div>
+                </div>
+                <ProfileStatus isOwner={isOwner} status={status} updateUserStatus={updateUserStatus}/>
                 <div>
                     <h4>Name:</h4>
                     {profile.fullName}
