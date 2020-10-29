@@ -5,7 +5,6 @@ import NewPostReduxForm from "./NewPostForm/NewPostForm";
 
 
 const My_posts = (props) => {
-    console.log("render")
     /*shouldComponentUpdate(nextProps, nextState) {
         return nextProps != this.props || nextState != this.state //проверка на изменение state и props если вернется
         false лишний render не производится исп в классовой компоненте, но лучше использовать PureComponent

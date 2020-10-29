@@ -1,4 +1,6 @@
 import {profileAPI} from "../../api/api";
+import {stopSubmit} from "redux-form";
+import validContactsObjCreated from "../../components/common/validContactsObjCreated/validContactsObjCreated";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -90,6 +92,8 @@ export const savePhotoSuccess = (photos) => ({
 })
 
 
+
+
 export const getProfile = (id) => {
     return async (dispatch) => {
         let data = await profileAPI.getProfile(id)
@@ -115,6 +119,19 @@ export const savePhoto = (photos) => {
     return async (dispatch) => {
         let data = await profileAPI.updatePhoto(photos)
         if (data.resultCode === 0) dispatch(savePhotoSuccess(data.data.photos))
+    }
+}
+
+export const updateProfileData = (profile) => {
+    return async (dispatch, getState) => {
+        const userId = getState().auth.userId
+        const data = await profileAPI.updateData(profile)
+        if (data.resultCode === 0) {
+            dispatch(getProfile(userId))
+        } else {
+            dispatch(stopSubmit('profile-data', {"contacts":validContactsObjCreated(data.messages)}))
+            return Promise.reject(data.messages[0]);
+        }
     }
 }
 

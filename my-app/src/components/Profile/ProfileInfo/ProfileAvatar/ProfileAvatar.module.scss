@@ -1,0 +1,28 @@
+.profileAvatarComponent {
+
+  margin-bottom: 30px;
+
+}
+
+.avatar__container {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.avatar__imgWrapper {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius:50%;
+}
+
+.addPhoto__btn {
+
+}

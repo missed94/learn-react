@@ -2,7 +2,13 @@ import React from "react";
 import classes from "./Profile.module.scss";
 import Profile from "./Profile";
 import {connect} from "react-redux";
-import {getProfile, getUserStatus, savePhoto, updateUserStatus} from "../../redux/reducers/profile-reducer";
+import {
+    getProfile,
+    getUserStatus,
+    savePhoto,
+    updateProfileData,
+    updateUserStatus
+} from "../../redux/reducers/profile-reducer";
 import {withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
@@ -40,6 +46,7 @@ class ProfileContainer extends React.Component {
                     status={this.props.status}
                     updateUserStatus={this.props.updateUserStatus}
                     savePhoto={this.props.savePhoto}
+                    updateProfileData={this.props.updateProfileData}
                 />
             </div>
         );
@@ -61,7 +68,8 @@ export default compose(
             getProfile,
             getUserStatus,
             updateUserStatus,
-            savePhoto
+            savePhoto,
+            updateProfileData
         }
     ),
     withRouter,

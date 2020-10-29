@@ -1,4 +1,4 @@
-import {loginAPI} from "../../api/api";
+import {loginAPI, profileAPI} from "../../api/api";
 import {stopSubmit} from "redux-form";
 
 const SET_USER_DATA = 'SET_USER_DATA'
@@ -10,6 +10,7 @@ let initialState = {
     login: null,
     isFetching: false,
     isAuth: false,
+    photos: {},
 }
 
 const authReducer = (state = initialState, action) => {
@@ -25,18 +26,19 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthUserData = (userId, email, login, isAuth) => ({
+export const setAuthUserData = (userId, email, login, isAuth, photos ) => ({
     type: SET_USER_DATA,
     data: {
-        userId, email, login, isAuth
+        userId, email, login, isAuth, photos
     }
 })
 
-export const getAuthUserData = () => async (dispatch) => {
+export const getAuthUserData = () => async (dispatch, getState) => {
     let data = await loginAPI.me()
     if (data.resultCode === 0) {
         let {id, email, login} = data.data
-        dispatch(setAuthUserData(id, email, login, true)) // then всегда возвращает promise
+        let {photos} = await profileAPI.getProfile(id)
+        dispatch(setAuthUserData(id, email, login, true, photos))
     }
 }
 
@@ -45,7 +47,7 @@ export const login = (email, password, rememberMe) => {
     return async (dispatch) => {
         let data = await loginAPI.login(email, password, rememberMe)
         if (data.resultCode === 0) {
-            dispatch(getAuthUserData())
+             dispatch(getAuthUserData())
         } else {
             let message = data.messages.length > 0 ? data.messages[0] : "Some error"
             dispatch(stopSubmit("login", {
