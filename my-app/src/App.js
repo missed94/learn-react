@@ -39,7 +39,7 @@ class App extends React.Component {
                     <HeaderContainer/>
                     <Sidebar state={this.props.state.sidebar}/>
                     <div className="app-wrapper-content">
-                            <Redirect from="/" to="/profile" />
+                            <Redirect exact from="/" to="/profile" />
 
                             <Route
                                 path="/login"

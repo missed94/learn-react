@@ -92,8 +92,6 @@ export const savePhotoSuccess = (photos) => ({
 })
 
 
-
-
 export const getProfile = (id) => {
     return async (dispatch) => {
         let data = await profileAPI.getProfile(id)
@@ -101,18 +99,27 @@ export const getProfile = (id) => {
     }
 }
 
-export const getUserStatus = (id) => {
-    return async (dispatch) => {
+export const getUserStatus = (id) => async (dispatch) => {
+    try {
         let data = await profileAPI.getStatus(id)
         dispatch(setUserStatus(data))
+    } catch (error) {
+        alert(error.message)
     }
 }
 
-export const updateUserStatus = (status) => {
-    return async (dispatch) => {
+
+export const updateUserStatus = (status) => async (dispatch) => {
+    try {
         let data = await profileAPI.updateStatus(status)
-        if (data.resultCode === 0) dispatch(setUserStatus(status))
+        if (data.resultCode === 0) {
+            dispatch(setUserStatus(status))
+        }
+    } catch (error) {
+        alert(error.message)
     }
+
+
 }
 
 export const savePhoto = (photos) => {
@@ -129,7 +136,7 @@ export const updateProfileData = (profile) => {
         if (data.resultCode === 0) {
             dispatch(getProfile(userId))
         } else {
-            dispatch(stopSubmit('profile-data', {"contacts":validContactsObjCreated(data.messages)}))
+            dispatch(stopSubmit('profile-data', {"contacts": validContactsObjCreated(data.messages)}))
             return Promise.reject(data.messages[0]);
         }
     }

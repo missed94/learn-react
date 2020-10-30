@@ -2,9 +2,10 @@ import React from "react";
 import classes from "./LoginForm.module.scss"
 import {Field, reduxForm} from "redux-form";
 import {Input} from "../../common/FormsControls/FormControls";
+import {required} from "../../../utils/validators/validators";
 
 
-const LoginForm = ({error, handleSubmit}) => {
+const LoginForm = ({error, handleSubmit, captchaUrl}) => {
     return (
         <div className={classes.loginFormComponent}>
             <form className={classes.login__form} onSubmit={handleSubmit}>
@@ -34,7 +35,19 @@ const LoginForm = ({error, handleSubmit}) => {
 
                     <span>remember me</span>
                 </label>
-                {error && <div className={classes.form__summaryError}> {error} </div>
+
+                {captchaUrl && <div className={classes.captcha__wrapper}>
+                    <img src={captchaUrl} alt="captcha"/>
+                    <Field
+                        type="text"
+                        name={"captcha"}
+                        placeholder={"enter symbols"}
+                        component={Input}
+                    />
+                </div>}
+
+                {
+                    error && <div className={classes.form__summaryError}> {error} </div>
                 }
                 <div>
                     <button type="submit">Login</button>

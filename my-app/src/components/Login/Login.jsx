@@ -6,12 +6,12 @@ import {login} from "../../redux/reducers/auth-reducer";
 import {Redirect} from "react-router-dom";
 
 
-const Login = ({login, isAuth}) => {
+const Login = ({login, isAuth, captchaUrl}) => {
 
 
 
     const onSubmit = (formData) => {
-        login(formData.email, formData.password, formData.rememberMe)
+        login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
     if (isAuth) return <Redirect to={"/profile"}/>
@@ -20,7 +20,7 @@ const Login = ({login, isAuth}) => {
     return (
         <div className={classes.loginComponent}>
             <h1>LOGIN</h1>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginReduxForm captchaUrl={captchaUrl} onSubmit={onSubmit}/>
         </div>
 
     )
@@ -29,7 +29,8 @@ const Login = ({login, isAuth}) => {
 
 const mapStateToProps = (state) => {
     return {
-        isAuth: state.auth.isAuth
+        isAuth: state.auth.isAuth,
+        captchaUrl: state.auth.captchaUrl
     }
 }
 
