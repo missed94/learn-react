@@ -21,11 +21,22 @@
   color: black;
   cursor: pointer;
   margin-left: 10px;
+  transition: .2s;
+
+  &:hover {
+    color: #222222;
+    font-weight: bold;
+  }
 }
 
 .pagination__link_active {
   font-weight: bold;
   margin-left: 10px;
+  color: #222222;
+
+  &:hover {
+    color: #222222;
+  }
 }
 
 .button {
