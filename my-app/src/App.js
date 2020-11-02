@@ -1,5 +1,5 @@
 import React from "react";
-import {HashRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
 import "./App.scss";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
@@ -78,13 +78,13 @@ let AppContainer = compose(
 
 
  let SamuraiJSApp = (props) => {
-   return <HashRouter>
+   return <BrowserRouter>
         <Provider store={store}>
             <AppContainer
                 state={store.getState()}
             />
         </Provider>
-    </HashRouter>
+    </BrowserRouter>
 }
 
 export default SamuraiJSApp

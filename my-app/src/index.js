@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import 'normalize.css';
 import './reset.css'
 import './index.scss';
+import 'antd/dist/antd.css';
 import SamuraiJSApp from './App';
 import {BrowserRouter} from "react-router-dom";
 import store from "./redux/redux-store";

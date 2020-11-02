@@ -7,7 +7,6 @@ const validContactsObjCreated = (responseData) => {
     let interMedStr = newString.substr(11)
     let mainString = interMedStr.toLowerCase().substr(0,interMedStr.length - 1)
 
-
     return  ({
         [mainString]: message
     })
