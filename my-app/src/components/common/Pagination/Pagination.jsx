@@ -24,7 +24,10 @@ const Pagination = ({totalItemsCount, pageSize, pageChanged, currentPage, portio
         <div className={classes.paginationComponent}>
             <div className={classes.pagination}>
                 {
-                    portionNumber > 1 && <button className={`${classes.button} ${classes.prev__button}`} onClick={() => {setPortionNumber(portionNumber - 1)}}>PREV</button>
+                    portionNumber > 1 &&
+                    <button className={`${classes.button} ${classes.prev__button}`} onClick={() => {
+                        setPortionNumber(portionNumber - 1)
+                    }}>PREV</button>
                 }
 
                 <ul className={classes.pagination__list}>
@@ -49,7 +52,10 @@ const Pagination = ({totalItemsCount, pageSize, pageChanged, currentPage, portio
                 </ul>
 
                 {
-                    portionNumber <  portionCount && <button className={`${classes.button} ${classes.next__button}`} onClick={() => {setPortionNumber(portionNumber + 1)}}>NEXT</button>
+                    portionNumber < portionCount &&
+                    <button className={`${classes.button} ${classes.next__button}`} onClick={() => {
+                        setPortionNumber(portionNumber + 1)
+                    }}>NEXT</button>
                 }
             </div>
 
