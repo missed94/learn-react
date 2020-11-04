@@ -6,11 +6,11 @@ ul li {
   display: flex;
   flex-direction: column;
   grid-area: content;
-  background-color: yellow;
+  background-color: #edeef0;
 }
 
 .app-container {
-  width: 95%;
+  width: calc(100% - 20px);
   margin: 0 auto;
   display: grid;
 

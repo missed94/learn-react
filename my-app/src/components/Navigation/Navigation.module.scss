@@ -3,17 +3,16 @@
 }
 
 .item{
+  margin-bottom: 20px;
+  &:last-child {
+    margin-bottom: 0;
+  }
   a {
-    color:white;
+    color:#2a5885;
     cursor: pointer;
   }
 }
 
-.item{
-  a.active {
-    color: black;
-  }
-}
 
 
 

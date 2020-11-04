@@ -5,7 +5,7 @@ const SET_USER_DATA = 'SET_USER_DATA'
 const CAPTCHA_URL_SUCCESS = 'CAPTCHA_URL_SUCCESS'
 
 
-export type initialStateType = {
+export type initialStateType2 = {
     userId: number | null,
     email: string | null,
     login: string | null,
@@ -15,17 +15,19 @@ export type initialStateType = {
     captchaUrl: string | null
 }
 
-const initialState:initialStateType = {
+const initialState:initialStateType2 = {
     userId: null,
     email: null,
     login: null,
     isFetching: false,
     isAuth: false,
     photos: {},
-    captchaUrl: null
+    captchaUrl:null
 }
 
-const authReducer = (state = initialState, action:any):initialStateType => {
+//type initialStateType = typeof initialState
+
+const authReducer = (state = initialState, action:any):initialStateType2 => {
     switch (action.type) {
         case SET_USER_DATA: {
             return {
@@ -37,7 +39,7 @@ const authReducer = (state = initialState, action:any):initialStateType => {
         case CAPTCHA_URL_SUCCESS: {
             return {
                 ...state,
-                captchaUrl: action.captchaUrl
+                captchaUrl: action.captchaUrl,
             }
         }
         default:
@@ -62,7 +64,7 @@ type setAuthUserDataActionType = {
      userId:number | null,
      email:string | null,
      login:string | null,
-     isAuth:boolean | null,
+     isAuth:boolean,
      photos:object | null
  ):setAuthUserDataActionType => ({
     type: SET_USER_DATA,

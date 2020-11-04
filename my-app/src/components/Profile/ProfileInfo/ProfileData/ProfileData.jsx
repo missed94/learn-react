@@ -9,29 +9,29 @@ const ProfileData = ({profile, activateEditMode, isOwner}) => {
         <div className={classes.ProfileDataComponent}>
             {isOwner && <button onClick={activateEditMode}>Change profile info</button>
             }
-            <div>
-                <h4>Name:</h4>
+            <div className={classes.row}>
+                <h4 className={classes.row__title}>Name:</h4>
                 {profile.fullName}
-            </div>
-            <div>
-                <h4>About me:</h4>
+            </div >
+            <div className={classes.row}>
+                <h4 className={classes.row__title}>About me:</h4>
                 {profile.aboutMe}
             </div>
-            <div>
-                <h4>Contacts:</h4>
+            <div className={classes.row}>
+                <h4 className={classes.row__title}>Contacts:</h4>
                 <ul>
                     {Object.keys(profile.contacts).map(key => {
                         return <Contact key={key} contactTitle={key} contactValue={profile.contacts[key]}/>
                     })}
                 </ul>
             </div>
-            <div>
-                <h4>Looking for a job:</h4>
+            <div className={classes.row}>
+                <h4 className={classes.row__title}>Looking for a job:</h4>
                 <p>{profile.lookingForAJob ? "yes" : "no"}</p>
             </div>
 
-            <div>
-                <h4>Professional skills:</h4>
+            <div className={classes.row}>
+                <h4 className={classes.row__title}>Professional skills:</h4>
                 {profile.lookingForAJob ? <p>{profile.lookingForAJobDescription}</p> : null}
             </div>
         </div>

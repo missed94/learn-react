@@ -18,7 +18,7 @@ const Dialogs = (props) => {
 
 
     const addNewMessage = (values) => {
-        props.onSendMessage(values.message)
+        props.onSendMessage(10, values.message)
     }
 
     return (
