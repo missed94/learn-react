@@ -6,7 +6,6 @@ const Header = (props) => {
 
     let defaultPhotoUrl = "https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"
 
-
     return (
         <header className={classes.headerComponent}>
             <img
