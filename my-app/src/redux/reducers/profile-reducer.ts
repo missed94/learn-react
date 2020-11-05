@@ -1,6 +1,7 @@
 import {profileAPI} from "../../api/api";
 import {stopSubmit} from "redux-form";
 import validContactsObjCreated from "../../components/common/validContactsObjCreated/validContactsObjCreated";
+import {myPostsType, photosType, profileType} from "../../types/types";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -8,98 +9,116 @@ const SET_USER_STATUS = 'SET_USER_STATUS'
 const DELETE_POST = 'DELETE_POST'
 const SAVE_PHOTO = 'SAVE_PHOTO'
 
+
 let initialState = {
     myPosts: [
-        {id: 1, message: "Hi, how are you!", likes: "30"},
-        {id: 2, message: "it's my first post", likes: "20"}
-    ],
-    profile: null,
-    status: "",
+        {id: 1, message: "Hi, how are you!", likes: 30},
+        {id: 2, message: "it's my first post", likes: 20}
+    ] as Array<myPostsType>,
+    profile: null as profileType | null,
+    status: "" as string,
 }
 
-const profileReducer = (state = initialState, action) => {
+export type initialStateType = typeof initialState
+
+const profileReducer = (state = initialState, action:any):initialStateType => {
 
     switch (action.type) {
-
         case ADD_POST: {
             let newPost = {
                 id: 5,
                 message: action.newPost,
                 likes: 0,
             };
-
             return { //если есть return, break можно не использовать
                 ...state,
                 myPosts: [newPost, ...state.myPosts],
             }
         }
-
         case DELETE_POST: {
             return {
                 ...state,
                 myPosts: state.myPosts.filter(p => p.id !== action.postId)
             }
         }
-
         case SET_USER_PROFILE: {
             return {
                 ...state,
                 profile: action.profile
             }
         }
-
         case SET_USER_STATUS: {
             return {
                 ...state,
                 status: action.status
             }
         }
-
         case SAVE_PHOTO: {
             return {
                 ...state,
-                profile: {...state.profile, photos: action.photos}
-
+                profile: {...state.profile, photos: action.photos} as profileType
             }
         }
-
         default:
             return state;
     }
 }
 
-export const addPost = (newPost) => ({type: ADD_POST, newPost})
+type addPostType = {
+    type: typeof ADD_POST,
+    newPost: string
+}
+export const addPost = (newPost:string):addPostType => ({
+    type: ADD_POST,
+    newPost
+})
 
-
-export const setUserProfile = (profile) => ({
+type setUserProfileType = {
+    type: typeof SET_USER_PROFILE,
+    profile: profileType
+}
+export const setUserProfile = (profile:profileType):setUserProfileType => ({
     type: SET_USER_PROFILE,
     profile
 })
 
-export const setUserStatus = (status) => ({
+
+type setUserStatusType = {
+    type: typeof SET_USER_STATUS,
+    status: string
+}
+export const setUserStatus = (status:string):setUserStatusType => ({
     type: SET_USER_STATUS,
     status
 })
 
-export const removePost = (postId) => ({
+type removePostType = {
+    type: typeof DELETE_POST,
+    postId: number
+}
+export const removePost = (postId: number): removePostType => ({
     type: DELETE_POST,
     postId
 })
 
-export const savePhotoSuccess = (photos) => ({
+type savePhotoSuccessType = {
+    type: typeof SAVE_PHOTO,
+    photos: photosType
+}
+export const savePhotoSuccess = (photos:photosType):savePhotoSuccessType => ({
     type: SAVE_PHOTO,
     photos
 })
 
 
-export const getProfile = (id) => {
-    return async (dispatch) => {
+export const getProfile = (id:number) => {
+    return async (dispatch:any) => {
         let data = await profileAPI.getProfile(id)
         dispatch(setUserProfile(data))
     }
 }
 
-export const getUserStatus = (id) => async (dispatch) => {
+export const getUserStatus = (id:number) => async (dispatch:any) => {
     try {
         let data = await profileAPI.getStatus(id)
         dispatch(setUserStatus(data))
@@ -109,7 +128,7 @@ export const getUserStatus = (id) => async (dispatch) => {
 }
 
 
-export const updateUserStatus = (status) => async (dispatch) => {
+export const updateUserStatus = (status:string) => async (dispatch:any) => {
     try {
         let data = await profileAPI.updateStatus(status)
         if (data.resultCode === 0) {
@@ -122,15 +141,15 @@ export const updateUserStatus = (status) => async (dispatch) => {
 
 }
 
-export const savePhoto = (photos) => {
-    return async (dispatch) => {
-        let data = await profileAPI.updatePhoto(photos)
+export const savePhoto = (newPhoto:any) => {
+    return async (dispatch:any) => {
+        let data = await profileAPI.updatePhoto(newPhoto)
         if (data.resultCode === 0) dispatch(savePhotoSuccess(data.data.photos))
     }
 }
 
-export const updateProfileData = (profile) => {
-    return async (dispatch, getState) => {
+export const updateProfileData = (profile:profileType) => {
+    return async (dispatch:any, getState:any) => {
         const userId = getState().auth.userId
         const data = await profileAPI.updateData(profile)
         if (data.resultCode === 0) {

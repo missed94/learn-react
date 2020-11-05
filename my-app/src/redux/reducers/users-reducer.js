@@ -10,6 +10,8 @@ const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING';
 const TOGGLE_IS_FOLLOWING_PROGRESS = 'FOLLOWING_IN_PROGRESS'
 
 
+
+
 let initialState = {
     users: [],
     portionSize: 10,
@@ -19,7 +21,6 @@ let initialState = {
     isFetching: true,
     followingInProgress: []
 }
-
 
 const usersReducer = (state = initialState, action) => {
 
@@ -90,8 +91,6 @@ const usersReducer = (state = initialState, action) => {
                     : [state.followingInProgress.filter(id => id !== action.userId)] //filter уже вернет новый массив..добавляем только те id которая не равны id из action'а
             }
         }
-
-
         default:
             return state;
     }
@@ -100,9 +99,22 @@ const usersReducer = (state = initialState, action) => {
 }
 
 
-export const follow = (userId) => ({type: FOLLOW, userId});
-export const unfollow = (userId) => ({type: UNFOLLOW, userId});
-export const setUsers = (users) => ({type: SET_USERS, users});
+export const follow = (userId) => ({
+    type: FOLLOW,
+    userId
+});
+
+export const unfollow = (userId) => ({
+    type: UNFOLLOW,
+    userId
+});
+
+
+export const setUsers = (users) => ({
+    type: SET_USERS,
+    users
+});
+
 export const setCurrentPage = (pageNumber) => ({type: SET_CURRENT_PAGE, pageNumber});
 export const setTotalUsersCount = (totalItemsCount) => ({type: SET_TOTAL_USERS_COUNT, totalItemsCount});
 export const toggleIsFetching = (isFetching) => ({type: TOGGLE_IS_FETCHING, isFetching});
