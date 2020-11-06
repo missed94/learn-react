@@ -92,7 +92,7 @@ const usersReducer = (state = initialState, action: any): initialStateType => {
 }
 
 
-type followType = {
+export type followType = {
     type: typeof FOLLOW,
     userId: number
 }
@@ -101,7 +101,7 @@ export const follow = (userId: number): followType => ({
     userId
 });
 
-type unfollowType = {
+export type unfollowType = {
     type: typeof UNFOLLOW,
     userId: number
 }
@@ -111,7 +111,7 @@ export const unfollow = (userId: number): unfollowType => ({
 });
 
 
-type setUsersType = {
+export type setUsersType = {
     type: typeof SET_USERS,
     users: Array<usersType>
 }
@@ -120,7 +120,7 @@ export const setUsers = (users: Array<usersType>): setUsersType => ({
     users
 });
 
-type setCurrentPageType = {
+export type setCurrentPageType = {
     type: typeof SET_CURRENT_PAGE,
     pageNumber: number
 }
@@ -130,7 +130,7 @@ export const setCurrentPage = (pageNumber: number): setCurrentPageType => ({
 });
 
 
-type setTotalUsersCountType = {
+export type setTotalUsersCountType = {
     type: typeof SET_TOTAL_USERS_COUNT,
     totalItemsCount: number
 }
@@ -139,7 +139,7 @@ export const setTotalUsersCount = (totalItemsCount: number): setTotalUsersCountT
     totalItemsCount
 });
 
-type toggleIsFetchingType = {
+export type toggleIsFetchingType = {
     type: typeof TOGGLE_IS_FETCHING,
     isFetching: boolean
 }
@@ -148,7 +148,7 @@ export const toggleIsFetching = (isFetching: boolean): toggleIsFetchingType => (
     isFetching
 });
 
-type toggleFollowingInProgressType = {
+export type toggleFollowingInProgressType = {
     type: typeof TOGGLE_IS_FOLLOWING_PROGRESS,
     isFetching: boolean,
     userId: number,

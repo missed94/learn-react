@@ -10,7 +10,7 @@ const ProfileAvatar = ({profile, isOwner, savePhoto}) => {
 
     const onMainPhotoSelected = (e) => {
         if (e.fileList.length) {
-            savePhoto(e.fileList[0].originFileObj)
+            savePhoto(e.fileList[e.fileList.length - 1].originFileObj)
         }
     }
     /*const onMainPhotoSelected = (e) => {
@@ -21,20 +21,15 @@ const ProfileAvatar = ({profile, isOwner, savePhoto}) => {
         }
     }*/
 
-
-
-
     return (
         <div className={classes.profileAvatarComponent}>
             <div className={classes.avatar__container}>
                 <div className={classes.avatar__imgWrapper}>
                     <img className={classes.avatar} src={profile.photos.large || defaultPhotoUrl} alt=""/>
                 </div>
-                {isOwner && <Upload onChange={onMainPhotoSelected}>
+                {isOwner && <Upload showUploadList={false} onChange={onMainPhotoSelected}>
                     <Button icon={<UploadOutlined />}>Click to Upload</Button>
                 </Upload>} {/*<input className={classes.addPhoto__btn} onChange={onMainPhotoSelected} type={"file"}/>*/}
-
-
             </div>
         </div>
     )

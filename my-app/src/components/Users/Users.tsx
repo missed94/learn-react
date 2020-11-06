@@ -1,21 +1,32 @@
-import React from "react";
+import React, {FC} from "react";
 import User from "./User/User";
 import classes from "./Users.module.scss"
 import Pagination from "../common/Pagination/Pagination";
+import {usersType} from "../../types/types";
 
 
+type PropsType = {
+    getFollow: (userId: number) => void,
+    getUnfollow: (userId: number) => void,
+    followingInProgress: Array<number>,
+    users: Array<usersType>,
+    totalItemsCount: number,
+    pageSize: number,
+    pageChanged: (pageNumber: number) => void,
+    currentPage: number,
+    portionSize: number
+}
 
 
-const Users = (props) => {
+const Users: FC<PropsType> = (props) => {
 
-    let usersArray = props.users.map((user, index) => {
+    let usersArray = props.users.map((user:usersType, index:number) => {
         return (
             <User
                 key={user.id}
                 user={user}
                 getFollow={props.getFollow}
                 getUnfollow={props.getUnfollow}
-                toggleFollowingInProgress={props.toggleFollowingInProgress}
                 followingInProgress={props.followingInProgress}
             />
         )

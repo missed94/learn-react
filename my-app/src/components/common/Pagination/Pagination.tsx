@@ -2,23 +2,32 @@ import React, {useState} from "react";
 import classes from "./Pagination.module.scss"
 
 
-const Pagination = ({totalItemsCount, pageSize, pageChanged, currentPage, portionSize = 10}) => {
+type PropsType = {
+    totalItemsCount: number,
+    pageSize: number,
+    pageChanged: (pageNumber: number) => void,
+    currentPage: number,
+    portionSize?: number,
+}
+
+const Pagination: React.FC<PropsType> = ({
+                                             totalItemsCount,
+                                             pageSize,
+                                             pageChanged,
+                                             currentPage,
+                                             portionSize = 10
+}) => {
 
     let pagesCount = Math.ceil(totalItemsCount / pageSize)
-
-    let pageNumbers = [];
-
+    let pageNumbers: Array<number> = [];
     for (let i = 1; i <= pagesCount; i++) {
         pageNumbers.push(i);
     }
-
     let portionCount = Math.ceil(pagesCount / portionSize);
-
     let [portionNumber, setPortionNumber] = useState(1);
-
     let leftPortionPageNumber = (portionNumber - 1) * portionSize + 1
-
     let rightPortionPageNumber = portionNumber * portionSize
+
     return (
 
         <div className={classes.paginationComponent}>

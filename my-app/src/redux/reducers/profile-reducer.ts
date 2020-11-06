@@ -2,6 +2,7 @@ import {profileAPI} from "../../api/api";
 import {stopSubmit} from "redux-form";
 import validContactsObjCreated from "../../components/common/validContactsObjCreated/validContactsObjCreated";
 import {myPostsType, photosType, profileType} from "../../types/types";
+import {getAuthUserData} from "./auth-reducer";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -142,9 +143,12 @@ export const updateUserStatus = (status:string) => async (dispatch:any) => {
 }
 
 export const savePhoto = (newPhoto:any) => {
-    return async (dispatch:any) => {
+    return async (dispatch:any, getState:any) => {
         let data = await profileAPI.updatePhoto(newPhoto)
-        if (data.resultCode === 0) dispatch(savePhotoSuccess(data.data.photos))
+        if (data.resultCode === 0) {
+            dispatch(savePhotoSuccess(data.data.photos))
+            dispatch(getAuthUserData())
+        }
     }
 }
 
