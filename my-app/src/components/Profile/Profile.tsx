@@ -1,11 +1,20 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./Profile.module.scss";
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./My_posts/MyPostsContainer";
-import {updateProfileData} from "../../redux/reducers/profile-reducer";
+import {profileType} from "../../types/types";
 
 
-const Profile = ({profile, status, updateUserStatus, isOwner, savePhoto, updateProfileData}) => {
+type propsType = {
+    profile: profileType | null,
+    status: string,
+    isOwner: boolean,
+    updateUserStatus: (status:string) => void
+    savePhoto: (newPhoto:any) => void
+    updateProfileData: (profile:profileType) => void
+}
+
+const Profile:FC<propsType> = ({profile, status, updateUserStatus, isOwner, savePhoto, updateProfileData}) => {
     return (
         <div className={classes.profileComponent}>
             <ProfileInfo updateProfileData={updateProfileData} savePhoto={savePhoto} isOwner={isOwner} profile={profile} status={status} updateUserStatus={updateUserStatus}

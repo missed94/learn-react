@@ -1,9 +1,17 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./User.module.scss";
 import {NavLink} from "react-router-dom";
+import {usersType} from "../../../types/types";
+
+type propsType = {
+    getFollow: (userId: number) => void,
+    getUnfollow: (userId: number) => void,
+    followingInProgress: Array<number>,
+    user: usersType,
+}
 
 
-const User = ({getFollow, getUnfollow, followingInProgress, user, ...props}) => {
+const User: FC<propsType> = ({getFollow, getUnfollow, followingInProgress, user, ...props}) => {
 
 
     let onFollow = () => {

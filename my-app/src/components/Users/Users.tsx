@@ -20,7 +20,7 @@ type PropsType = {
 
 const Users: FC<PropsType> = (props) => {
 
-    let usersArray = props.users.map((user:usersType, index:number) => {
+    let usersArray = props.users.map((user:usersType) => {
         return (
             <User
                 key={user.id}
