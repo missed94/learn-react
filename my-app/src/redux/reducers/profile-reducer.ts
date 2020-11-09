@@ -3,6 +3,9 @@ import {stopSubmit} from "redux-form";
 import validContactsObjCreated from "../../components/common/validContactsObjCreated/validContactsObjCreated";
 import {myPostsType, photosType, profileType} from "../../types/types";
 import {getAuthUserData} from "./auth-reducer";
+import {AppStateType} from "../redux-store";
+import {Dispatch} from "redux";
+import {ThunkAction} from "redux-thunk";
 
 const ADD_POST = 'ADD-POST';
 const SET_USER_PROFILE = 'SET_USER_PROFILE'
@@ -22,7 +25,7 @@ let initialState = {
 
 export type initialStateType = typeof initialState
 
-const profileReducer = (state = initialState, action:any):initialStateType => {
+const profileReducer = (state = initialState, action: actionTypes): initialStateType => {
 
     switch (action.type) {
         case ADD_POST: {
@@ -65,11 +68,18 @@ const profileReducer = (state = initialState, action:any):initialStateType => {
     }
 }
 
+type actionTypes =
+    addPostType
+    | setUserProfileType
+    | setUserStatusType
+    | removePostType
+    | savePhotoSuccessType
+
 type addPostType = {
     type: typeof ADD_POST,
     newPost: string
 }
-export const addPost = (newPost:string):addPostType => ({
+export const addPost = (newPost: string): addPostType => ({
     type: ADD_POST,
     newPost
 })
@@ -78,7 +88,7 @@ type setUserProfileType = {
     type: typeof SET_USER_PROFILE,
     profile: profileType
 }
-export const setUserProfile = (profile:profileType):setUserProfileType => ({
+export const setUserProfile = (profile: profileType): setUserProfileType => ({
     type: SET_USER_PROFILE,
     profile
 })
@@ -88,7 +98,7 @@ type setUserStatusType = {
     type: typeof SET_USER_STATUS,
     status: string
 }
-export const setUserStatus = (status:string):setUserStatusType => ({
+export const setUserStatus = (status: string): setUserStatusType => ({
     type: SET_USER_STATUS,
     status
 })
@@ -106,20 +116,24 @@ type savePhotoSuccessType = {
     type: typeof SAVE_PHOTO,
     photos: photosType
 }
-export const savePhotoSuccess = (photos:photosType):savePhotoSuccessType => ({
+export const savePhotoSuccess = (photos: photosType): savePhotoSuccessType => ({
     type: SAVE_PHOTO,
     photos
 })
 
 
-export const getProfile = (id:number) => {
-    return async (dispatch:any) => {
+type GetStateType = () => AppStateType
+type dispatchType = Dispatch<actionTypes>
+type thunkType = ThunkAction<Promise<void>, AppStateType, unknown, actionTypes>
+
+export const getProfile = (id: number): thunkType => {
+    return async (dispatch) => {
         let data = await profileAPI.getProfile(id)
         dispatch(setUserProfile(data))
     }
 }
 
-export const getUserStatus = (id:number) => async (dispatch:any) => {
+export const getUserStatus = (id: number): thunkType => async (dispatch) => {
     try {
         let data = await profileAPI.getStatus(id)
         dispatch(setUserStatus(data))
@@ -129,7 +143,7 @@ export const getUserStatus = (id:number) => async (dispatch:any) => {
 }
 
 
-export const updateUserStatus = (status:string) => async (dispatch:any) => {
+export const updateUserStatus = (status: string): thunkType => async (dispatch) => {
     try {
         let data = await profileAPI.updateStatus(status)
         if (data.resultCode === 0) {
@@ -142,8 +156,8 @@ export const updateUserStatus = (status:string) => async (dispatch:any) => {
 
 }
 
-export const savePhoto = (newPhoto:any) => {
-    return async (dispatch:any, getState:any) => {
+export const savePhoto = (newPhoto: any): thunkType => {
+    return async (dispatch) => {
         let data = await profileAPI.updatePhoto(newPhoto)
         if (data.resultCode === 0) {
             dispatch(savePhotoSuccess(data.data.photos))
@@ -152,8 +166,8 @@ export const savePhoto = (newPhoto:any) => {
     }
 }
 
-export const updateProfileData = (profile:profileType) => {
-    return async (dispatch:any, getState:any) => {
+export const updateProfileData = (profile: profileType) => {
+    return async (dispatch: any, getState:any) => {
         const userId = getState().auth.userId
         const data = await profileAPI.updateData(profile)
         if (data.resultCode === 0) {

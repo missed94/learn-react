@@ -1,12 +1,16 @@
-import React from "react";
-import {Field, reduxForm} from "redux-form";
-import Contact from "../Contact/Contact";
+import React, {FC} from "react";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import classes from "../../../My_posts/NewPostForm/NewPostForm.module.scss";
 import {Input, Textarea} from "../../../../common/FormsControls/FormControls";
 import {required} from "../../../../../utils/validators/validators";
+import {profileType} from "../../../../../types/types";
 
 
-const ProfileDataForm = ({handleSubmit, profile, error}) => {
+type propsType = {
+    profile: profileType,
+}
+
+const ProfileDataForm: FC<propsType & InjectedFormProps<profileType, propsType>> = ({handleSubmit, profile, error}) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
@@ -70,7 +74,7 @@ const ProfileDataForm = ({handleSubmit, profile, error}) => {
 }
 
 
-const ProfileDataFormRedux = reduxForm({
+const ProfileDataFormRedux = reduxForm<profileType, propsType>({
     form: 'profile-data'
 })(ProfileDataForm)
 

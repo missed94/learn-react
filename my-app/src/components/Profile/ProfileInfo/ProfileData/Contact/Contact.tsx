@@ -1,7 +1,12 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./Contact.module.scss"
 
-const Contact = ({contactTitle, contactValue}) => {
+type propsType = {
+    contactTitle: string,
+    contactValue: string
+}
+
+const Contact: FC<propsType> = ({contactTitle, contactValue}) => {
 
 
     return (

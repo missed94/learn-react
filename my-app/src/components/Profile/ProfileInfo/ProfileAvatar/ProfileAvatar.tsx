@@ -1,14 +1,24 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./ProfileAvatar.module.scss"
-import Upload from "antd/es/upload";
+import Upload, {UploadChangeParam} from "antd/es/upload";
 import Button from "antd/es/button";
-import { UploadOutlined } from '@ant-design/icons';
+import {UploadOutlined} from '@ant-design/icons';
+import {profileType} from "../../../../types/types";
+import { ChangeEvent } from "react";
 
-const ProfileAvatar = ({profile, isOwner, savePhoto}) => {
+
+
+type PropsType = {
+    profile: profileType,
+    isOwner: boolean,
+    savePhoto: (newPhoto: any) => void
+}
+
+const ProfileAvatar: FC<PropsType> = ({profile, isOwner, savePhoto}) => {
 
     let defaultPhotoUrl = "https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"
 
-    const onMainPhotoSelected = (e) => {
+    const onMainPhotoSelected = (e: UploadChangeParam) => {
         if (e.fileList.length) {
             savePhoto(e.fileList[e.fileList.length - 1].originFileObj)
         }
@@ -28,7 +38,7 @@ const ProfileAvatar = ({profile, isOwner, savePhoto}) => {
                     <img className={classes.avatar} src={profile.photos.large || defaultPhotoUrl} alt=""/>
                 </div>
                 {isOwner && <Upload showUploadList={false} onChange={onMainPhotoSelected}>
-                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                    <Button icon={<UploadOutlined/>}>Click to Upload</Button>
                 </Upload>} {/*<input className={classes.addPhoto__btn} onChange={onMainPhotoSelected} type={"file"}/>*/}
             </div>
         </div>

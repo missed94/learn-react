@@ -9,11 +9,12 @@ import {
     updateProfileData,
     updateUserStatus
 } from "../../redux/reducers/profile-reducer";
-import {withRouter, RouteComponentProps, match} from "react-router-dom";
+
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {profileType} from "../../types/types";
 import {AppStateType} from "../../redux/redux-store";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 
 type pathParamsType = {
@@ -88,7 +89,7 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
 
 
 export default compose<React.ComponentType>(
-    connect<mapStateToPropsType, mapDispatchToPropsType, {}, AppStateType>(mapStateToProps,
+    connect(mapStateToProps,
         {
             getProfile,
             getUserStatus,

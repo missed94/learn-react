@@ -10,7 +10,6 @@ type propsType = {
     user: usersType,
 }
 
-
 const User: FC<propsType> = ({getFollow, getUnfollow, followingInProgress, user, ...props}) => {
 
 
@@ -21,8 +20,6 @@ const User: FC<propsType> = ({getFollow, getUnfollow, followingInProgress, user,
         getUnfollow(user.id)
 
     }
-
-
     return (
         <li className={classes.userComponent}>
             <div className={classes.wrapper}>
@@ -42,8 +39,9 @@ const User: FC<propsType> = ({getFollow, getUnfollow, followingInProgress, user,
                         ? <button
                             disabled={followingInProgress.some(id => id === user.id)} //если хоть одна id из массива равна id пользлвателя при нажатии то ее и disabl'и
                             className={classes.button} onClick={onUnfollow}> unfollow </button>
-                        : <button disabled={followingInProgress.some(id => id === user.id)}
-                                  className={classes.button} onClick={onFollow}> follow </button>
+                        : <button
+                            disabled={followingInProgress.some(id => id === user.id)}
+                            className={classes.button} onClick={onFollow}> follow </button>
                     }
 
                 </div>

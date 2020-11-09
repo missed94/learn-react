@@ -18,12 +18,13 @@ export type photosType = {
     large: string
 }
 export type profileType = {
-    userId: number,
+    userId: number | null,
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
     fullName: string,
     contacts: contactsType,
     photos: photosType,
+    aboutMe: string
 }
 
 

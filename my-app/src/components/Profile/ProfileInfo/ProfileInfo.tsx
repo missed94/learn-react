@@ -1,14 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import classes from "./ProfileInfo.module.scss";
 import Preloader from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus/ProfileStatus";
 import ProfileData from "./ProfileData/ProfileData";
 import ProfileAvatar from "./ProfileAvatar/ProfileAvatar";
-import ProfileDataForm from "./ProfileData/ProfileDataForm/ProfileDataForm";
 import ProfileDataFormRedux from "./ProfileData/ProfileDataForm/ProfileDataForm";
+import {profileType} from "../../../types/types";
 
 
-const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto, updateProfileData}) => {
+type propsType = {
+    profile: profileType | null
+    status: string,
+    updateUserStatus: (status: string) => void,
+    isOwner: boolean,
+    savePhoto: (newPhoto: File) => void,
+    updateProfileData: (profile:profileType) => any
+}
+
+const ProfileInfo: React.FC<propsType> = ({profile, status, updateUserStatus, isOwner, savePhoto, updateProfileData}) => {
 
     let [editMode, setEditMode] = useState(false);
 
@@ -19,7 +28,7 @@ const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto, upd
         }
     }
 
-    const submitForm = (data) => {
+    const submitForm = (data: profileType) => {
         updateProfileData(data).then(
             () => {
                 setEditMode(false)
@@ -44,4 +53,4 @@ const ProfileInfo = ({profile, status, updateUserStatus, isOwner, savePhoto, upd
 };
 
 
-export default ProfileInfo;
+export default ProfileInfo

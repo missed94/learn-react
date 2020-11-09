@@ -1,8 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {FC, ReactDOM, useEffect, useState} from "react";
 import classes from "./ProfileStatus.module.scss"
-import StatusReduxForm from "./StatusForm/StatusForm";
 
-const ProfileStatus = (props) => {
+
+type propsType = {
+    status: string,
+    isOwner: boolean,
+    updateUserStatus: (status: string) => void,
+}
+
+const ProfileStatus: FC<propsType> = (props) => {
 
     let [editMode, setEditMode] = useState(false);
     let [status, setStatus] = useState(props.status); // деструктуризация массива, useState возвращает массив "[true, () => {}]", пременные editMode и setEditMode присваиваются соответственно
@@ -22,7 +28,7 @@ const ProfileStatus = (props) => {
         props.updateUserStatus(status)
     }
 
-    const onStatusChange = (e) => {
+    const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStatus(e.target.value)
     }
 
