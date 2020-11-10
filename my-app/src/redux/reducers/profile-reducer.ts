@@ -1,5 +1,5 @@
 import {profileAPI} from "../../api/api";
-import {stopSubmit} from "redux-form";
+import {FormAction, stopSubmit} from "redux-form";
 import validContactsObjCreated from "../../components/common/validContactsObjCreated/validContactsObjCreated";
 import {myPostsType, photosType, profileType} from "../../types/types";
 import {getAuthUserData} from "./auth-reducer";
@@ -126,7 +126,7 @@ type GetStateType = () => AppStateType
 type dispatchType = Dispatch<actionTypes>
 type thunkType = ThunkAction<Promise<void>, AppStateType, unknown, actionTypes>
 
-export const getProfile = (id: number): thunkType => {
+export const getProfile = (id: number | null): thunkType => {
     return async (dispatch) => {
         let data = await profileAPI.getProfile(id)
         dispatch(setUserProfile(data))
@@ -166,8 +166,8 @@ export const savePhoto = (newPhoto: any): thunkType => {
     }
 }
 
-export const updateProfileData = (profile: profileType) => {
-    return async (dispatch: any, getState:any) => {
+export const updateProfileData = (profile: profileType): thunkType => {
+    return async (dispatch:any, getState: GetStateType) => {
         const userId = getState().auth.userId
         const data = await profileAPI.updateData(profile)
         if (data.resultCode === 0) {

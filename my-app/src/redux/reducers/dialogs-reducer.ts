@@ -9,10 +9,7 @@ type messagesType = {
     id: number
     message: string
 }
-/*type initialStateType2 = {
-    dialogs: Array<dialogsType>
-    messages: Array<messagesType>
-}*/
+
 let initialState = {
     dialogs: [
         {id: 1, name: "Andrey"},
@@ -29,8 +26,7 @@ let initialState = {
 type initialStateType = typeof initialState
 
 
-
-const dialogsReducer = (state = initialState, action:any): initialStateType => {
+const dialogsReducer = (state = initialState, action:actionTypes): initialStateType => {
     switch (action.type) {
         case SEND_MESSAGE: {
             return {
@@ -42,6 +38,8 @@ const dialogsReducer = (state = initialState, action:any): initialStateType => {
             return state;
     }
 }
+
+type actionTypes = onSendMessageType
 
 type onSendMessagePayloadType = {
     id: number

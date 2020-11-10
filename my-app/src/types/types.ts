@@ -27,7 +27,6 @@ export type profileType = {
     aboutMe: string
 }
 
-
 export type usersType = {
     id: number,
     name: string,
