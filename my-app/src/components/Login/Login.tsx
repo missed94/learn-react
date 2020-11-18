@@ -1,21 +1,32 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./Login.module.scss"
 import LoginReduxForm from "./LoginForm/LoginForm";
 import {connect} from "react-redux";
 import {login} from "../../redux/reducers/auth-reducer";
 import {Redirect} from "react-router-dom";
+import {AppStateType} from "../../redux/redux-store";
+import {loginFormValuesType} from "../../types/types";
 
+type mapStatePropsType = {
+    isAuth: boolean
+    captchaUrl: string | null
+}
 
-const Login = ({login, isAuth, captchaUrl}) => {
+type mapDispatchPropsType = {
+    login: (
+        email: string,
+        password: string,
+        rememberMe: boolean,
+        captcha: null | string) => void
+}
 
+const Login: FC<mapStatePropsType & mapDispatchPropsType> = ({login, isAuth, captchaUrl}) => {
 
-
-    const onSubmit = (formData) => {
+    const onSubmit = (formData: loginFormValuesType) => {
         login(formData.email, formData.password, formData.rememberMe, formData.captcha)
     }
 
     if (isAuth) return <Redirect to={"/profile"}/>
-
 
     return (
         <div className={classes.loginComponent}>
@@ -27,7 +38,7 @@ const Login = ({login, isAuth, captchaUrl}) => {
 }
 
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state: AppStateType) => {
     return {
         isAuth: state.auth.isAuth,
         captchaUrl: state.auth.captchaUrl

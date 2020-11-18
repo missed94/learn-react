@@ -1,11 +1,17 @@
-import React from "react";
+import React, {FC} from "react";
 import classes from "./LoginForm.module.scss"
-import {Field, reduxForm} from "redux-form";
+import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import {Input} from "../../common/FormsControls/FormControls";
 import {required} from "../../../utils/validators/validators";
+import {loginFormValuesType} from "../../../types/types";
 
 
-const LoginForm = ({error, handleSubmit, captchaUrl}) => {
+
+type loginOwnPropsType = {
+    captchaUrl: string | null
+}
+
+const LoginForm:FC<InjectedFormProps<loginFormValuesType,loginOwnPropsType> & loginOwnPropsType> = ({error, handleSubmit, captchaUrl}) => {
     return (
         <div className={classes.loginFormComponent}>
             <form className={classes.login__form} onSubmit={handleSubmit}>
@@ -24,7 +30,6 @@ const LoginForm = ({error, handleSubmit, captchaUrl}) => {
                         placeholder={"password"}
                         component={Input}
                     />
-
                 </div>
                 <label>
                     <Field
@@ -32,10 +37,8 @@ const LoginForm = ({error, handleSubmit, captchaUrl}) => {
                         type="checkbox"
                         name={"rememberMe"}
                     />
-
                     <span>remember me</span>
                 </label>
-
                 {captchaUrl && <div className={classes.captcha__wrapper}>
                     <img src={captchaUrl} alt="captcha"/>
                     <Field
@@ -45,7 +48,6 @@ const LoginForm = ({error, handleSubmit, captchaUrl}) => {
                         component={Input}
                     />
                 </div>}
-
                 {
                     error && <div className={classes.form__summaryError}> {error} </div>
                 }
@@ -58,7 +60,7 @@ const LoginForm = ({error, handleSubmit, captchaUrl}) => {
     )
 }
 
-const LoginReduxForm = reduxForm({
+const LoginReduxForm = reduxForm<loginFormValuesType,loginOwnPropsType>({
     form: 'login'
 })(LoginForm)
 

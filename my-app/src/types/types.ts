@@ -34,3 +34,11 @@ export type usersType = {
     photos: photosType,
     followed: boolean
 }
+
+export type loginFormValuesType = {
+    email: string,
+    password: string,
+    rememberMe: boolean,
+    captcha: null | string
+}
+
