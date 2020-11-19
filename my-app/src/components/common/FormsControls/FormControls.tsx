@@ -1,11 +1,11 @@
-import React from "react"
+import React, {FC} from "react"
 import classes from "./FormControls.module.scss"
-import {WrappedFieldProps} from "redux-form";
+import Field, {WrappedFieldProps} from "redux-form";
+import {fieldValidatorType} from "../../../utils/validators/validators";
 
 
-
-type formControlType = (params: WrappedFieldProps ) => React.ReactNode
-const FormControl = (Element: any):formControlType => ({input,meta: {touched, error}, ...props}) => {
+type formControlType = (Element: typeof React.Component | string) => (params: WrappedFieldProps) => React.ReactNode
+const FormControl: formControlType = (Element) => ({input, meta: {touched, error}, ...props}) => {
     const hasError = touched && error;
     return (
         <div className={
@@ -25,6 +25,23 @@ const FormControl = (Element: any):formControlType => ({input,meta: {touched, er
     )
 }
 
-
 export const Textarea = FormControl("textarea");
 export const Input = FormControl("input");
+
+/*
+export function createField<formKeysType extends string>(placeholder: string | undefined,
+                            name: formKeysType,
+                            validators: Array<fieldValidatorType>,
+                            component: formControlType,
+                            props = {},
+                            text = ""
+) {
+    return <div>
+        <Field placeholder={placeholder}
+               validate={validators}
+               component={component}
+               {...props}
+        />{text}
+    </div>
+}
+*/

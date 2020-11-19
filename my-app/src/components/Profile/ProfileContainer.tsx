@@ -31,12 +31,10 @@ type mapStateToPropsType = {
 type mapDispatchToPropsType = {
     updateUserStatus: (status: string) => void
     savePhoto: (newPhoto: any) => void
-    updateProfileData: (profile: profileType) => void
+    updateProfileData: (profile: profileType) => Promise<any>
     getProfile: (urlProfileId: number) => void,
     getUserStatus: (urlProfileId: number) => void,
 }
-
-
 type propsType = RouteComponentProps<pathParamsType>
     & mapStateToPropsType & mapDispatchToPropsType
 
@@ -88,7 +86,7 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
 })
 
 
-export default compose<React.ComponentType>(
+export default compose(
     connect(mapStateToProps,
         {
             getProfile,

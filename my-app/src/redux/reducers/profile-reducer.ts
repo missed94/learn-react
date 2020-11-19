@@ -75,7 +75,7 @@ type actionTypes =
     | removePostType
     | savePhotoSuccessType
 
-type addPostType = {
+export type addPostType = {
     type: typeof ADD_POST,
     newPost: string
 }
@@ -103,7 +103,7 @@ export const setUserStatus = (status: string): setUserStatusType => ({
     status
 })
 
-type removePostType = {
+export type removePostType = {
     type: typeof DELETE_POST,
     postId: number
 }

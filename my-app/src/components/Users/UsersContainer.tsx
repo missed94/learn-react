@@ -84,7 +84,7 @@ let mapStateToProps = (state: AppStateType): mapStatePropsType => {
 }
 
 //<TStateProps = {}, TDispatchProps = {}, TOwnProps = {}, State = DefaultState>
-export default connect<mapStatePropsType, mapDispatchPropsType, {}, AppStateType>(
+export default connect(
     mapStateToProps,
     {
         requestUsers,

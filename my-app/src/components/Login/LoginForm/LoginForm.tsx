@@ -15,6 +15,7 @@ const LoginForm:FC<InjectedFormProps<loginFormValuesType,loginOwnPropsType> & lo
     return (
         <div className={classes.loginFormComponent}>
             <form className={classes.login__form} onSubmit={handleSubmit}>
+                {/*{createField("email", "email",[required], Input)}*/}
                 <div>
                     <Field
                         type="text"

@@ -42,3 +42,7 @@ export type loginFormValuesType = {
     captcha: null | string
 }
 
+export type newPostFormValuesType = {
+    post: string
+}
+
