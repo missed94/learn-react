@@ -6,7 +6,6 @@ import {WrappedFieldProps} from "redux-form";
 
 type formControlType = (params: WrappedFieldProps ) => React.ReactNode
 const FormControl = (Element: any):formControlType => ({input,meta: {touched, error}, ...props}) => {
-    debugger
     const hasError = touched && error;
     return (
         <div className={
