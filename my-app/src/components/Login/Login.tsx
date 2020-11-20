@@ -1,11 +1,10 @@
 import React, {FC} from "react";
 import classes from "./Login.module.scss"
-import LoginReduxForm from "./LoginForm/LoginForm";
+import LoginReduxForm, {loginFormValuesType} from "./LoginForm/LoginForm";
 import {connect} from "react-redux";
 import {login} from "../../redux/reducers/auth-reducer";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
-import {loginFormValuesType} from "../../types/types";
 
 type mapStatePropsType = {
     isAuth: boolean

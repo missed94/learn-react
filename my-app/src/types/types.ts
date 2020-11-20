@@ -35,14 +35,7 @@ export type usersType = {
     followed: boolean
 }
 
-export type loginFormValuesType = {
-    email: string,
-    password: string,
-    rememberMe: boolean,
-    captcha: null | string
-}
 
-export type newPostFormValuesType = {
-    post: string
-}
+
+
 

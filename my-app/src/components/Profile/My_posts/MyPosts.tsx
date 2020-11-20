@@ -1,34 +1,33 @@
 import React from "react";
-import {addPost, addPostType, removePost, removePostType} from "../../../redux/reducers/profile-reducer";
+import {
+    profileActions
+} from "../../../redux/reducers/profile-reducer";
 import {connect} from "react-redux";
-import {compose} from "redux";
-import {myPostsType, newPostFormValuesType} from "../../../types/types";
+import {myPostsType} from "../../../types/types";
 import {AppStateType} from "../../../redux/redux-store";
 import Post from "./Post/Post";
 import classes from "./My_posts.module.scss";
-import NewPostReduxForm from "./NewPostForm/NewPostForm";
-
+import NewPostReduxForm, {NewPostFormValuesType} from "./NewPostForm/NewPostForm";
 
 
 type mapStateToPropsType = {
-    myPosts:Array<myPostsType>
+    myPosts: Array<myPostsType>
 }
 
 type mapDispatchToPropsType = {
-    addPost: (newPostText: string) => void
-    removePost: (newPostText: number) => void
+        addPost: (newPost:string) => void,
+        removePost: (id:number) => void
 }
 
 type propsType = mapStateToPropsType & mapDispatchToPropsType
 
-const MyPosts:React.FC<propsType> = ({myPosts, addPost, removePost}) => {
-
+const MyPosts: React.FC<propsType> = ({myPosts, addPost, removePost}) => {
     let postsArray = myPosts.map((post) => {
-        return <Post key={post.id} id = {post.id} removePost={removePost} message={post.message} likes={post.likes}/>
+        return <Post key={post.id} id={post.id} removePost={removePost} message={post.message} likes={post.likes}/>
     })
 
-    let addNewPost = (values:newPostFormValuesType) => {
-        addPost(values.post)
+    let addNewPost = (values: NewPostFormValuesType) => {
+       addPost(values.post)
     }
 
     return (
@@ -44,11 +43,14 @@ const MyPosts:React.FC<propsType> = ({myPosts, addPost, removePost}) => {
     )
 }
 
-let mapStateToProps = (state:AppStateType) => {
+let mapStateToProps = (state: AppStateType) => {
     return {
         myPosts: state.profilePage.myPosts,
     }
 }
 
 const MyPostsMemorized = React.memo(MyPosts)
-export default connect(mapStateToProps, {addPost, removePost})(MyPostsMemorized)
+export default connect(mapStateToProps, {
+    addPost: profileActions.addPost,
+    removePost: profileActions.removePost
+})(MyPostsMemorized)
