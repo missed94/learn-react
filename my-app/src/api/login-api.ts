@@ -14,9 +14,7 @@ type loginResponseDataType = {
 export const loginAPI = {
     me() {
         return instance.get<responseType<meResponseDataType>>(`auth/me`)
-            .then(response => {
-                return response.data
-            })
+            .then(response => response.data)
     },
 
     login(email: string, password: string, rememberMe = false, captcha: null | string = null) {
@@ -26,15 +24,11 @@ export const loginAPI = {
             rememberMe,
             captcha
         })
-            .then(response => {
-                return response.data
-            })
+            .then(response => response.data)
     },
 
     logout() {
         return instance.delete<responseType>(`auth/login`)
-            .then(response => {
-                return response.data
-            })
+            .then(response => response.data)
     }
 }

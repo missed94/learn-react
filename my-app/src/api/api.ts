@@ -24,7 +24,6 @@ export type getItemsType = {
     error: string | null
 }
 
-
 export type responseType<D = {}, RC = ResultCodesEnum> = {
     data: D,
     resultCode: RC,
