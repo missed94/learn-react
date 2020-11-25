@@ -1,4 +1,3 @@
-import {profileAPI} from "../../api/api";
 import {stopSubmit} from "redux-form";
 import validContactsObjCreated from "../../components/common/validContactsObjCreated/validContactsObjCreated";
 import {myPostsType, photosType, profileType} from "../../types/types";
@@ -6,6 +5,7 @@ import {getAuthUserData} from "./auth-reducer";
 import {AppStateType, InferActionsTypes} from "../redux-store";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
+import {profileAPI} from "../../api/profile-api";
 
 
 let initialState = {

@@ -1,9 +1,12 @@
-import {CaptchaEnum, loginAPI, profileAPI, ResultCodesEnum, securityAPI} from "../../api/api";
+import {CaptchaEnum, ResultCodesEnum} from "../../api/api";
 import {stopSubmit} from "redux-form";
 import {photosType} from "../../types/types";
 import {AppStateType, InferActionsTypes} from "../redux-store";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
+import {loginAPI} from "../../api/login-api";
+import {profileAPI} from "../../api/profile-api";
+import {securityAPI} from "../../api/securityapi";
 
 const initialState = {
     userId: null as number | null,

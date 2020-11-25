@@ -1,9 +1,10 @@
-import {followUnfollowAPI, usersAPI} from "../../api/api";
 import {mappingArraysInObject} from "../../utils/helpers/helpers";
 import {usersType} from "../../types/types";
 import {AppStateType, InferActionsTypes} from "../redux-store";
 import {Dispatch} from "redux";
 import {ThunkAction} from "redux-thunk";
+import {usersAPI} from "../../api/users-api";
+import {followUnfollowAPI} from "../../api/follow-unfollow-api";
 
 let initialState = {
     users: [] as Array<usersType>,
@@ -160,13 +161,13 @@ const followUnfollowToggle = async (dispatch: dispatchType,
 
 export const getFollow = (userId: number): thunkType => {
     return async (dispatch) => {
-        await followUnfollowToggle(dispatch, userId, followUnfollowAPI.getFollow.bind(followUnfollowAPI), usersActions.follow)
+        await followUnfollowToggle(dispatch, userId, followUnfollowAPI.getFollow, usersActions.follow)
     }
 }
 
 export const getUnfollow = (userId: number): thunkType => {
     return async (dispatch) => {
-        await followUnfollowToggle(dispatch, userId, followUnfollowAPI.getUnfollow.bind(followUnfollowAPI), usersActions.unfollow)
+        await followUnfollowToggle(dispatch, userId, followUnfollowAPI.getUnfollow, usersActions.unfollow)
     }
 }
 
