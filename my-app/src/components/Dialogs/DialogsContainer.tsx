@@ -4,21 +4,21 @@ import {connect} from "react-redux";
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {dialogsActions} from "../../redux/reducers/dialogs-reducer";
+import {AppStateType} from "../../redux/redux-store";
 
 
-let mapStateToProps = (state) => {
+let mapStateToProps = (state: AppStateType) => {
 
     return {
         dialogs: state.dialogsPage.dialogs,
         messages: state.dialogsPage.messages,
-        newMessage: state.dialogsPage.newMessage,
     }
 }
 
 export default compose(
     connect(mapStateToProps,
         {
-            onSendMessage:dialogsActions.onSendMessage
+            onSendMessage: dialogsActions.onSendMessage
         }),
     withAuthRedirect //hoc redirect'а (если не авторизован скидывает на логин)
 )(Dialogs);

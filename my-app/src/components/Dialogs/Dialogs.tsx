@@ -2,23 +2,28 @@ import React from "react";
 import classes from "./Dialogs.module.scss";
 import Dialog from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import MessageReduxForm from "./MessageForm/MessageForm";
+import MessageReduxForm, {dialogsFormValuesType} from "./MessageForm/MessageForm";
+import {dialogsType, messagesType} from "../../types/types";
 
 
-const Dialogs = (props) => {
+type dialogsPropsType = {
+    dialogs: Array<dialogsType>
+    messages: Array<messagesType>
+    onSendMessage: (id: number, message: string) => void
+}
 
-    let dialogsArray = props.dialogs.map((dialog, i) => {
+const Dialogs: React.FC<dialogsPropsType> = ({dialogs, messages, onSendMessage}) => {
+
+    let dialogsArray = dialogs.map((dialog) => {
         return <Dialog key={dialog.id} name={dialog.name} id={dialog.id}/>
     })
 
-    let messagesArray = props.messages.map((message, i) => {
-        return <Message key={message.id}  message={message.message} />
+    let messagesArray = messages.map((message, i) => {
+        return <Message key={message.id} message={message.message}/>
     })
 
-
-
-    const addNewMessage = (values) => {
-        props.onSendMessage(10, values.message)
+    const addNewMessage = (values: dialogsFormValuesType) => {
+        onSendMessage(10, values.message)
     }
 
     return (
@@ -37,7 +42,6 @@ const Dialogs = (props) => {
         </div>
     )
 }
-
 
 
 export default Dialogs;

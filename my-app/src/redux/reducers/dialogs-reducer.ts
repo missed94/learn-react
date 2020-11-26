@@ -1,14 +1,6 @@
 import {InferActionsTypes} from "../redux-store";
+import {dialogsType, messagesType} from "../../types/types";
 
-
-type dialogsType = {
-    id: number
-    name: string
-}
-type messagesType = {
-    id: number
-    message: string
-}
 
 let initialState = {
     dialogs: [
@@ -23,10 +15,8 @@ let initialState = {
         {id: 3, message: "What is your health"},
     ] as Array<messagesType>,
 }
-type initialStateType = typeof initialState
 
-
-const dialogsReducer = (state = initialState, action:profileActionTypes): initialStateType => {
+const dialogsReducer = (state = initialState, action: profileActionTypes): initialStateType => {
     switch (action.type) {
         case 'SEND_MESSAGE': {
             return {
@@ -38,8 +28,6 @@ const dialogsReducer = (state = initialState, action:profileActionTypes): initia
             return state;
     }
 }
-
-export type profileActionTypes = InferActionsTypes<typeof dialogsActions>
 
 export const dialogsActions = {
     onSendMessage: (
@@ -56,3 +44,8 @@ export const dialogsActions = {
 
 
 export default dialogsReducer
+
+
+type initialStateType = typeof initialState
+export type profileActionTypes = InferActionsTypes<typeof dialogsActions>
+

@@ -1,14 +1,11 @@
 import {getAuthUserData} from "./auth-reducer";
-import {AppStateType, InferActionsTypes} from "../redux-store";
-import {Dispatch} from "redux";
-import {ThunkAction} from "redux-thunk";
+import {InferActionsTypes, thunkType} from "../redux-store";
+
 
 
 let initialState = {
     initialized: false,
 }
-
-type initialStateType = typeof initialState
 
 const appReducer = (state = initialState, action:appActionTypes):initialStateType => {
     switch (action.type) {
@@ -23,17 +20,13 @@ const appReducer = (state = initialState, action:appActionTypes):initialStateTyp
     }
 }
 
-type appActionTypes = InferActionsTypes<typeof AppActions>
 
 const AppActions = {
    setInitialized:() => ({type: 'SET_INITIALIZED'} as const)
 }
 
-type GetStateType = () => AppStateType
-type dispatchType = Dispatch<appActionTypes>
-type thunkType = ThunkAction<Promise<void>, AppStateType, unknown, appActionTypes>
 
-export const initializeApp = (): thunkType => {
+export const initializeApp = (): thunkType<appActionTypes> => {
     return async (dispatch) => {
         await dispatch(getAuthUserData())
         dispatch(AppActions.setInitialized())
@@ -42,3 +35,7 @@ export const initializeApp = (): thunkType => {
 
 
 export default appReducer
+
+
+type initialStateType = typeof initialState
+type appActionTypes = InferActionsTypes<typeof AppActions>

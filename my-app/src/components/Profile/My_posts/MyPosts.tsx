@@ -15,8 +15,8 @@ type mapStateToPropsType = {
 }
 
 type mapDispatchToPropsType = {
-        addPost: (newPost:string) => void,
-        removePost: (id:number) => void
+        addPost: (newPost: string) => void,
+        removePost: (id: number) => void
 }
 
 type propsType = mapStateToPropsType & mapDispatchToPropsType

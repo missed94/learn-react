@@ -35,6 +35,15 @@ export type usersType = {
     followed: boolean
 }
 
+export type dialogsType = {
+    id: number
+    name: string
+}
+
+export type messagesType = {
+    id: number
+    message: string
+}
 
 
 

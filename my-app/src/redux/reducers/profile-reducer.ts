@@ -1,10 +1,8 @@
-import {stopSubmit} from "redux-form";
+import {FormAction, stopSubmit} from "redux-form";
 import validContactsObjCreated from "../../components/common/validContactsObjCreated/validContactsObjCreated";
 import {myPostsType, photosType, profileType} from "../../types/types";
 import {getAuthUserData} from "./auth-reducer";
-import {AppStateType, InferActionsTypes} from "../redux-store";
-import {Dispatch} from "redux";
-import {ThunkAction} from "redux-thunk";
+import {InferActionsTypes, thunkType} from "../redux-store";
 import {profileAPI} from "../../api/profile-api";
 
 
@@ -16,8 +14,6 @@ let initialState = {
     profile: null as profileType | null,
     status: "" as string,
 }
-
-export type initialStateType = typeof initialState
 
 const profileReducer = (state = initialState, action: profileActionTypes): initialStateType => {
 
@@ -62,9 +58,6 @@ const profileReducer = (state = initialState, action: profileActionTypes): initi
     }
 }
 
-export type profileActionTypes = InferActionsTypes<typeof profileActions>
-
-
 export const profileActions = {
     addPost: (newPost: string) => ({
         type: 'ADD_POST',
@@ -75,7 +68,6 @@ export const profileActions = {
         type: 'SET_USER_PROFILE',
         profile
     } as const),
-
 
     setUserStatus: (status: string) => ({
         type: 'SET_USER_STATUS',
@@ -93,19 +85,14 @@ export const profileActions = {
     } as const)
 }
 
-
-type GetStateType = () => AppStateType
-type dispatchType = Dispatch<profileActionTypes>
-type thunkType = ThunkAction<Promise<void>, AppStateType, unknown, profileActionTypes>
-
-export const getProfile = (id: number | null): thunkType => {
+export const getProfile = (id: number | null): thunkType<profileActionTypes> => {
     return async (dispatch) => {
         let data = await profileAPI.getProfile(id)
         dispatch(profileActions.setUserProfile(data))
     }
 }
 
-export const getUserStatus = (id: number): thunkType => async (dispatch) => {
+export const getUserStatus = (id: number): thunkType<profileActionTypes> => async (dispatch) => {
     try {
         let data = await profileAPI.getStatus(id)
         dispatch(profileActions.setUserStatus(data))
@@ -114,8 +101,7 @@ export const getUserStatus = (id: number): thunkType => async (dispatch) => {
     }
 }
 
-
-export const updateUserStatus = (status: string): thunkType => async (dispatch) => {
+export const updateUserStatus = (status: string): thunkType<profileActionTypes> => async (dispatch) => {
     try {
         let data = await profileAPI.updateStatus(status)
         if (data.resultCode === 0) {
@@ -124,31 +110,33 @@ export const updateUserStatus = (status: string): thunkType => async (dispatch) 
     } catch (error) {
         alert(error.message)
     }
-
-
 }
 
-export const savePhoto = (newPhoto: any): thunkType => {
+export const savePhoto = (newPhoto: File): thunkType<profileActionTypes> => {
     return async (dispatch) => {
         let data = await profileAPI.updatePhoto(newPhoto)
         if (data.resultCode === 0) {
-            dispatch(profileActions.savePhotoSuccess(data.data.photos));
+            dispatch(profileActions.savePhotoSuccess(data.data.photos))
             dispatch(getAuthUserData())
         }
     }
 }
 
-export const updateProfileData = (profile: profileType): thunkType => {
-    return async (dispatch: any, getState: GetStateType) => {
+export const updateProfileData = (profile: profileType): thunkType<profileActionTypes | FormAction> => {
+    return async (dispatch, getState) => {
         const userId = getState().auth.userId
         const data = await profileAPI.updateData(profile)
         if (data.resultCode === 0) {
             dispatch(getProfile(userId))
         } else {
             dispatch(stopSubmit('profile-data', {"contacts": validContactsObjCreated(data.messages)}))
-            return Promise.reject(data.messages[0]);
+            return Promise.reject(data.messages[0])
         }
     }
 }
 
 export default profileReducer
+
+
+export type profileActionTypes = InferActionsTypes<typeof profileActions>
+export type initialStateType = typeof initialState

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { render } from '@testing-library/react';
 import SamuraiJSApp from "./App";
 
 test('renders without crashing', () => {
