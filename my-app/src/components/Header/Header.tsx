@@ -5,9 +5,9 @@ import {photosType} from "../../types/types";
 
 type propsType = {
     isAuth: boolean,
-    photos: photosType,
-    loginName: string,
-    logout: () => void
+    photos: photosType | any,
+    loginName: string | null,
+    logout: () => Promise<void>
 }
 
 const Header:React.FC<propsType> = ({isAuth, photos, loginName, logout}) => {

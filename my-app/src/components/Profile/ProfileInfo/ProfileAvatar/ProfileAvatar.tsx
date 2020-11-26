@@ -23,13 +23,6 @@ const ProfileAvatar: FC<PropsType> = ({profile, isOwner, savePhoto}) => {
             savePhoto(e.fileList[e.fileList.length - 1].originFileObj)
         }
     }
-    /*const onMainPhotoSelected = (e) => {
-
-        debugger
-        if (e.currentTarget.files.length) {
-            savePhoto(e.currentTarget.files[0])
-        }
-    }*/
 
     return (
         <div className={classes.profileAvatarComponent}>
@@ -39,7 +32,7 @@ const ProfileAvatar: FC<PropsType> = ({profile, isOwner, savePhoto}) => {
                 </div>
                 {isOwner && <Upload showUploadList={false} onChange={onMainPhotoSelected}>
                     <Button icon={<UploadOutlined/>}>Click to Upload</Button>
-                </Upload>} {/*<input className={classes.addPhoto__btn} onChange={onMainPhotoSelected} type={"file"}/>*/}
+                </Upload>}
             </div>
         </div>
     )

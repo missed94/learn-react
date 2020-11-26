@@ -11,7 +11,6 @@ import {AppStateType} from "../../redux/redux-store";
 let mapStateToProps = (state: AppStateType) => ({
     isAuth: state.auth.isAuth,
     loginName: state.auth.login,
-    currentId: state.auth.id,
     photos: state.auth.photos,
 })
 

@@ -2,6 +2,7 @@ import React from "react";
 import classes from"./FriendsItem.module.scss"
 
 type propsType = {
+    id: number
     friendName: string
 }
 
