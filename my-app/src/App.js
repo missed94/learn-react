@@ -37,7 +37,7 @@ class App extends React.Component {
             <div className="app-wrapper">
                 <div className="app-container">
                     <HeaderContainer/>
-                    <Sidebar state={this.props.state.sidebar}/>
+                    <Sidebar/>
                     <div className="app-wrapper-content">
                             <Redirect exact from="/" to="/profile" />
 

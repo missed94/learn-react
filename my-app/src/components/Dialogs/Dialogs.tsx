@@ -43,5 +43,4 @@ const Dialogs: React.FC<dialogsPropsType> = ({dialogs, messages, onSendMessage})
     )
 }
 
-
 export default Dialogs;

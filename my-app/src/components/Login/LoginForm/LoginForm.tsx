@@ -1,9 +1,8 @@
 import React, {FC} from "react";
 import classes from "./LoginForm.module.scss"
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
-import {createField, formControlType, Input} from "../../common/FormsControls/FormControls";
+import {InjectedFormProps, reduxForm} from "redux-form";
+import {createField, Input} from "../../common/FormsControls/FormControls";
 import {required} from "../../../utils/validators/validators";
-
 
 
 type loginOwnPropsType = {

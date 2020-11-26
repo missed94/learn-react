@@ -1,9 +1,4 @@
-
-
-type friendsType = {
-    id: number,
-    name: string
-}
+import {friendsType} from "../../types/types";
 
 
 let initialState = {
@@ -14,10 +9,6 @@ let initialState = {
         {id: 4, name: "Igor"},
     ] as Array<friendsType>
 };
-
-type initialStateType = typeof initialState
-
-
 
  const sidebarReducer = (state = initialState, action:any) => {
     return state;

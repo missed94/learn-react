@@ -1,8 +1,16 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import classes from "./Header.module.scss"
 import {NavLink} from "react-router-dom";
+import {photosType} from "../../types/types";
 
-const Header = (props) => {
+type propsType = {
+    isAuth: boolean,
+    photos: photosType,
+    loginName: string,
+    logout: () => void
+}
+
+const Header:React.FC<propsType> = ({isAuth, photos, loginName, logout}) => {
 
     let defaultPhotoUrl = "https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"
 
@@ -11,17 +19,17 @@ const Header = (props) => {
             <img
                 src="https://image.similarpng.com/very-thumbnail/2020/07/Whatsapp-logo-design-on-transparent-background-PNG.png"/>
             <div className={classes.login__container}>
-                {props.isAuth
+                {isAuth
                     ? <div className={classes.headerLogin__wrapper}>
                         <div className={classes.headerAvatar__wrapper}>
                             <img className={classes.photo}
-                                 src={props.photos.small || defaultPhotoUrl}
+                                 src={photos.small || defaultPhotoUrl}
                                  alt=""/>
-                            <span className={classes.loginName}>{props.loginName}</span>
+                            <span className={classes.loginName}>{loginName}</span>
                         </div>
 
                         <div className={classes.headerBtn__wrapper}>
-                            <button className={classes.headerBtn} onClick={props.logout}>logout</button>
+                            <button className={classes.headerBtn} onClick={logout}>logout</button>
                         </div>
                     </div>
                     : <NavLink className={classes.login__link} to={`/login`}> Login
