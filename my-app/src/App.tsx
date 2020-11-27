@@ -11,17 +11,24 @@ import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/reducers/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
-import store from "./redux/redux-store";
+import store, {AppStateType} from "./redux/redux-store";
 import {withSuspense} from "./components/hoc/withSuspense";
 
 
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')); //ленивая загрузка компоненты
+const DialogsWithSuspense = withSuspense(DialogsContainer)
+
+
 const ProfileContainer = React.lazy(() => import('./components/Profile/ProfileContainer'));
+const ProfileWithSuspense = withSuspense(ProfileContainer)
+
 const Login = React.lazy(() => import('./components/Login/Login'));
+const LoginWithSuspense = withSuspense(Login)
 
 
-class App extends React.Component {
+
+class App extends React.Component<propsType> {
 
     componentDidMount() {
         this.props.initializeApp()
@@ -40,14 +47,13 @@ class App extends React.Component {
                     <Sidebar/>
                     <div className="app-wrapper-content">
                             <Redirect exact from="/" to="/profile" />
-
                             <Route
                                 path="/login"
-                                render={withSuspense(Login)}
+                                render={() => <LoginWithSuspense/>}
                             />
-                            <Route path="/dialogs" render={withSuspense(DialogsContainer)}
+                            <Route path="/dialogs" render={() => <DialogsWithSuspense/>}
                             />
-                            <Route path="/profile/:userId?" render={withSuspense(ProfileContainer)}
+                            <Route path="/profile/:userId?" render={() => <ProfileWithSuspense/>}
                             />
                             <Route path="/Users" render={() =>
                                 <UsersContainer/>
@@ -63,12 +69,19 @@ class App extends React.Component {
     }
 }
 
+type mapStateToPropsType = ReturnType<typeof mapStateToProps>
+type mapDispatchToPropsType = {
+    initializeApp: () => void
+}
+type propsType = mapStateToPropsType & mapDispatchToPropsType
 
-let mapStateToProps = (state) => ({
+
+
+let mapStateToProps = (state: AppStateType) => ({
     initialized: state.app.initialized
 })
 
-let AppContainer = compose(
+let AppContainer = compose<React.ComponentType>(
     connect(
         mapStateToProps,
         {initializeApp}
@@ -77,12 +90,10 @@ let AppContainer = compose(
 )(App)
 
 
- let SamuraiJSApp = (props) => {
+ let SamuraiJSApp = () => {
    return <HashRouter>
         <Provider store={store}>
-            <AppContainer
-                state={store.getState()}
-            />
+            <AppContainer/>
         </Provider>
     </HashRouter>
 }

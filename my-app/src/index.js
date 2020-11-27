@@ -6,8 +6,6 @@ import './reset.css'
 import './index.scss';
 import SamuraiJSApp from './App';
 
-
-
 ReactDOM.render(
     <SamuraiJSApp/>,
     document.getElementById('root')

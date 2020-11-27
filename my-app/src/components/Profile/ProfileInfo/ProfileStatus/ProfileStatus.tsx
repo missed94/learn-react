@@ -1,31 +1,27 @@
-import React, {FC, ReactDOM, useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import classes from "./ProfileStatus.module.scss"
 
 
-type propsType = {
-    status: string,
-    isOwner: boolean,
-    updateUserStatus: (status: string) => void,
-}
 
-const ProfileStatus: FC<propsType> = (props) => {
+
+const ProfileStatus: React.FC<propsType> = ({status, isOwner, updateUserStatus}) => {
 
     let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.status); // деструктуризация массива, useState возвращает массив "[true, () => {}]", пременные editMode и setEditMode присваиваются соответственно
+    let [localStatus, setStatus] = useState(status); // деструктуризация массива, useState возвращает массив "[true, () => {}]", пременные editMode и setEditMode присваиваются соответственно
 
-    useEffect( () => { //метод который вызывает переданную в него функцию уже после отрисовки всех компонентов
-        setStatus(props.status)
-    }, [props.status]) // зависимость, useEffect вызывается только тогда, когда меняется props.status
+    useEffect(() => { //метод который вызывает переданную в него функцию уже после отрисовки всех компонентов
+        setStatus(status)
+    }, [status]) // зависимость, useEffect вызывается только тогда, когда меняется props.status
 
     const activateEditMode = () => {
-        if (props.isOwner) {
+        if (isOwner) {
             setEditMode(true)
         }
     }
 
     const deactivateEditMode = () => {
         setEditMode(false)
-        props.updateUserStatus(status)
+        updateUserStatus(localStatus)
     }
 
     const onStatusChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -37,26 +33,33 @@ const ProfileStatus: FC<propsType> = (props) => {
             {
                 !editMode &&
                 <div className={classes.status__wrap}>
-                    <span className={props.isOwner ? classes.authUserStatus : classes.userStatus} onClick={activateEditMode}>{
-                        props.isOwner
-                            ? props.status || "введите статус"
-                            : props.status || null
+                    <span className={isOwner ? classes.authUserStatus : classes.userStatus} onClick={activateEditMode}>{
+                        isOwner
+                            ? status || "введите статус"
+                            : status || null
                     }
                     </span>
                 </div>
             }
             {
-                editMode &&/* <StatusReduxForm onSubmit={sendStatus} defaultValue={status}/>*/
-            <form>
-                <input autoFocus onClick={activateEditMode} onChange={onStatusChange} onBlur={deactivateEditMode}
-                       value={status}/>
-                <button onClick={deactivateEditMode}>Save</button>
-            </form>
+                editMode &&/* <StatusReduxForm onSubmit={sendStatus} initialValue={status}/>*/
+                <form>
+                    <input autoFocus onClick={activateEditMode} onChange={onStatusChange} onBlur={deactivateEditMode}
+                           value={localStatus}/>
+                    <button onClick={deactivateEditMode}>Save</button>
+                </form>
             }
 
 
         </div>
     )
 }
-
 export default ProfileStatus
+
+
+
+type propsType = {
+    status: string,
+    isOwner: boolean,
+    updateUserStatus: (status: string) => void,
+}

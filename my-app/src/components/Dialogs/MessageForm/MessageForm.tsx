@@ -30,7 +30,7 @@ const MessageForm:FC<InjectedFormProps<dialogsFormValuesType>> = ({handleSubmit}
     )
 }
 
-const MessageReduxForm = reduxForm<dialogsFormValuesType>({
+const MessageReduxForm = reduxForm<dialogsFormValuesType & propsType>({
     form: 'message'
 })(MessageForm)
 

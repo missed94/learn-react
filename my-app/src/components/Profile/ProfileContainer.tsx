@@ -86,7 +86,7 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
 })
 
 
-export default compose(
+export default compose<React.ComponentType>(
     connect(mapStateToProps,
         {
             getProfile,
