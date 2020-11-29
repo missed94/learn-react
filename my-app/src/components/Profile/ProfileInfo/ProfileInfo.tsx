@@ -8,15 +8,6 @@ import ProfileDataFormRedux from "./ProfileData/ProfileDataForm/ProfileDataForm"
 import {profileType} from "../../../types/types";
 
 
-type propsType = {
-    profile: profileType | null
-    status: string,
-    updateUserStatus: (status: string) => void,
-    isOwner: boolean,
-    savePhoto: (newPhoto: File) => void,
-    updateProfileData: (profile:profileType) => Promise<any>
-}
-
 const ProfileInfo: React.FC<propsType> = ({profile, status, updateUserStatus, isOwner, savePhoto, updateProfileData}) => {
 
     let [editMode, setEditMode] = useState(false);
@@ -53,3 +44,17 @@ const ProfileInfo: React.FC<propsType> = ({profile, status, updateUserStatus, is
 
 
 export default ProfileInfo
+
+
+
+
+
+
+type propsType = {
+    profile: profileType | null
+    status: string,
+    updateUserStatus: (status: string) => void,
+    isOwner: boolean,
+    savePhoto: (newPhoto: File) => void,
+    updateProfileData: (profile:profileType) => Promise<any>
+}

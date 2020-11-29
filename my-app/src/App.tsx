@@ -1,19 +1,18 @@
 import React from "react";
-import {BrowserRouter, HashRouter, Redirect, Route, Switch, withRouter} from "react-router-dom";
+import {HashRouter, Redirect, Route, withRouter} from "react-router-dom";
 import "./App.scss";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
 import UsersContainer from "./components/Users/UsersContainer";
-import HeaderContainer from "./components/Header/HeaderContainer";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/reducers/app-reducer";
 import Preloader from "./components/common/Preloader/Preloader";
 import store, {AppStateType} from "./redux/redux-store";
 import {withSuspense} from "./components/hoc/withSuspense";
-
+import Header from "./components/Header/Header";
 
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')); //ленивая загрузка компоненты
@@ -43,7 +42,7 @@ class App extends React.Component<propsType> {
 
             <div className="app-wrapper">
                 <div className="app-container">
-                    <HeaderContainer/>
+                    <Header/>
                     <Sidebar/>
                     <div className="app-wrapper-content">
                             <Redirect exact from="/" to="/profile" />

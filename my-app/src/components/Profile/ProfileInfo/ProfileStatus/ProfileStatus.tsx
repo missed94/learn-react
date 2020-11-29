@@ -49,8 +49,6 @@ const ProfileStatus: React.FC<propsType> = ({status, isOwner, updateUserStatus})
                     <button onClick={deactivateEditMode}>Save</button>
                 </form>
             }
-
-
         </div>
     )
 }

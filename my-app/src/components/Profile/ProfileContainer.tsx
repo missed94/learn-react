@@ -9,34 +9,11 @@ import {
     updateProfileData,
     updateUserStatus
 } from "../../redux/reducers/profile-reducer";
-
 import {withAuthRedirect} from "../hoc/withAuthRedirect";
 import {compose} from "redux";
 import {profileType} from "../../types/types";
 import {AppStateType} from "../../redux/redux-store";
-import { RouteComponentProps, withRouter } from "react-router-dom";
-
-
-type pathParamsType = {
-    userId: string
-}
-
-//type mapStateToPropsType = ReturnType<typeof mapStateToProps>
-type mapStateToPropsType = {
-    profile: profileType | null,
-    status: string,
-    AuthUserId: number | null
-}
-
-type mapDispatchToPropsType = {
-    updateUserStatus: (status: string) => void
-    savePhoto: (newPhoto: any) => void
-    updateProfileData: (profile: profileType) => Promise<any>
-    getProfile: (urlProfileId: number) => void,
-    getUserStatus: (urlProfileId: number) => void,
-}
-type propsType = RouteComponentProps<pathParamsType>
-    & mapStateToPropsType & mapDispatchToPropsType
+import {RouteComponentProps, withRouter} from "react-router-dom";
 
 
 class ProfileContainer extends React.Component<propsType> {
@@ -85,7 +62,6 @@ let mapStateToProps = (state: AppStateType): mapStateToPropsType => ({
     AuthUserId: state.auth.userId,
 })
 
-
 export default compose<React.ComponentType>(
     connect(mapStateToProps,
         {
@@ -100,3 +76,30 @@ export default compose<React.ComponentType>(
     withAuthRedirect
 )
 (ProfileContainer);
+
+
+
+
+
+
+
+type pathParamsType = {
+    userId: string
+}
+
+type mapStateToPropsType = {
+    profile: profileType | null,
+    status: string,
+    AuthUserId: number | null
+}
+
+type mapDispatchToPropsType = {
+    updateUserStatus: (status: string) => void
+    savePhoto: (newPhoto: any) => void
+    updateProfileData: (profile: profileType) => Promise<any>
+    getProfile: (urlProfileId: number) => void,
+    getUserStatus: (urlProfileId: number) => void,
+}
+
+type propsType = RouteComponentProps<pathParamsType>
+    & mapStateToPropsType & mapDispatchToPropsType

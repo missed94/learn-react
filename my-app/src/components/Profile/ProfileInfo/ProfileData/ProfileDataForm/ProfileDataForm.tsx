@@ -1,34 +1,36 @@
 import React, {FC} from "react";
 import {Field, InjectedFormProps, reduxForm} from "redux-form";
 import classes from "../../../My_posts/NewPostForm/NewPostForm.module.scss";
-import {Input, Textarea} from "../../../../common/FormsControls/FormControls";
+import {createField, Input, Textarea} from "../../../../common/FormsControls/FormControls";
 import {required} from "../../../../../utils/validators/validators";
 import {profileType} from "../../../../../types/types";
 
 
-type propsType = {
-    profile: profileType,
-}
 
 const ProfileDataForm: FC<propsType & InjectedFormProps<profileType, propsType>> = ({handleSubmit, profile, error}) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
                 <h4>Name:</h4>
-                <Field className={classes.fullNameInput}
-                       name={"fullName"}
-                       component={Input}
-                       placeholder={"Enter your full name"}
-                       validate={[required]}
-                />
+                {createField<ProfileDataFormValuesTypeKeys>(
+                    classes.fullNameInput,
+                    "Enter your full name",
+                    "fullName",
+                    "text",
+                    [required],
+                    Input
+                )}
             </div>
             <div>
                 <h4>About me:</h4>
-                <Field className={classes.AboutMeInput}
-                       name={"aboutMe"}
-                       component={Textarea}
-                       placeholder={"Ask about you"}
-                />
+                {createField<ProfileDataFormValuesTypeKeys>(
+                    classes.AboutMeInput,
+                    "Ask about you",
+                    "aboutMe",
+                    "text",
+                    [required],
+                    Textarea
+                )}
             </div>
             <div>
                 <h4>Contacts:</h4>
@@ -50,32 +52,45 @@ const ProfileDataForm: FC<propsType & InjectedFormProps<profileType, propsType>>
             </div>
             <div>
                 <h4>Looking for a job:</h4>
-                <Field className={classes.lookingForAJobInput}
-                       name={"lookingForAJob"}
-                       component={"input"}
-                       type={"checkbox"}
-                    //placeholder={"Ask about you"}
-                    //validate={[required]}
-                />
+                {createField<ProfileDataFormValuesTypeKeys>(
+                    classes.lookingForAJobInput,
+                    undefined,
+                    "lookingForAJob",
+                    "checkbox",
+                    [required],
+                    Input
+                )}
             </div>
-
             <div>
                 <h4>Professional skills:</h4>
-                <Field className={classes.skillsInput}
-                       name={"lookingForAJobDescription"}
-                       component={Textarea}
-                       placeholder={"Ask your skills"}
-                    //validate={[required]}
-                />
+                {createField<ProfileDataFormValuesTypeKeys>(
+                    classes.skillsInput,
+                    "Ask your skills",
+                    "lookingForAJobDescription",
+                    "text",
+                    [],
+                    Textarea
+                )}
             </div>
             <button>Submit profile info</button>
         </form>
     )
 }
 
-
 const ProfileDataFormRedux = reduxForm<profileType, propsType>({
     form: 'profile-data'
 })(ProfileDataForm)
 
 export default ProfileDataFormRedux
+
+
+
+
+
+
+
+type propsType = {
+    profile: profileType,
+}
+
+type ProfileDataFormValuesTypeKeys = Extract<keyof profileType, string>

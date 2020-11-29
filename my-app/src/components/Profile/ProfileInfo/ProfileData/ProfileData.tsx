@@ -1,17 +1,10 @@
-import React, {FC} from "react";
+import React from "react";
 import classes from "./ProfileData.module.scss"
 import Contact from "./Contact/Contact";
 import {contactsType, profileType} from "../../../../types/types";
 
 
-type propsType = {
-    profile: profileType,
-    activateEditMode: () => void,
-    isOwner: boolean
-}
-
-const ProfileData: FC<propsType> = ({profile, activateEditMode, isOwner}) => {
-
+const ProfileData: React.FC<propsType> = ({profile, activateEditMode, isOwner}) => {
 
     return (
         <div className={classes.ProfileDataComponent}>
@@ -49,3 +42,15 @@ const ProfileData: FC<propsType> = ({profile, activateEditMode, isOwner}) => {
 }
 
 export default ProfileData
+
+
+
+
+
+
+
+type propsType = {
+    profile: profileType,
+    activateEditMode: () => void,
+    isOwner: boolean
+}

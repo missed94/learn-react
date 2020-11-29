@@ -1,19 +1,13 @@
-import React, {FC} from "react";
+import React from "react";
 import classes from "./NewPostForm.module.scss";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {InjectedFormProps, reduxForm} from "redux-form";
 import {maxLengthCreator, required} from "../../../../utils/validators/validators";
 import {createField, Textarea} from "../../../common/FormsControls/FormControls";
 
 
-
-export type NewPostFormValuesType = {
-    post: string,
-}
-type NewPostFormValuesTypeKeys = Extract<keyof NewPostFormValuesType, string>
-
 const maxLength10 = maxLengthCreator(10)
-const NewPostForm:FC<InjectedFormProps<NewPostFormValuesType>> = (props) => {
 
+const NewPostForm: React.FC<InjectedFormProps<NewPostFormValuesType>> = (props) => {
     return (
         <form onSubmit={props.handleSubmit}>
             {createField<NewPostFormValuesTypeKeys>(
@@ -35,3 +29,13 @@ const NewPostReduxForm = reduxForm<NewPostFormValuesType>({
 })(NewPostForm)
 
 export default NewPostReduxForm
+
+
+
+
+
+
+export type NewPostFormValuesType = {
+    post: string,
+}
+type NewPostFormValuesTypeKeys = Extract<keyof NewPostFormValuesType, string>

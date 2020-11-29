@@ -1,29 +1,20 @@
-import React, {FC} from "react";
+import React from "react";
 import classes from "./ProfileAvatar.module.scss"
 import Upload, {UploadChangeParam} from "antd/es/upload";
 import Button from "antd/es/button";
 import {UploadOutlined} from '@ant-design/icons';
 import {profileType} from "../../../../types/types";
-import { ChangeEvent } from "react";
 
 
-
-type PropsType = {
-    profile: profileType,
-    isOwner: boolean,
-    savePhoto: (newPhoto: any) => void
-}
-
-const ProfileAvatar: FC<PropsType> = ({profile, isOwner, savePhoto}) => {
+const ProfileAvatar: React.FC<PropsType> = ({profile, isOwner, savePhoto}) => {
 
     let defaultPhotoUrl = "https://lumpics.ru/wp-content/uploads/2017/11/Programmyi-dlya-sozdaniya-avatarok.png"
 
     const onMainPhotoSelected = (e: UploadChangeParam) => {
-        if (e.fileList.length) {
+        if (e.fileList?.length) {
             savePhoto(e.fileList[e.fileList.length - 1].originFileObj)
         }
     }
-
     return (
         <div className={classes.profileAvatarComponent}>
             <div className={classes.avatar__container}>
@@ -39,3 +30,12 @@ const ProfileAvatar: FC<PropsType> = ({profile, isOwner, savePhoto}) => {
 }
 
 export default ProfileAvatar
+
+
+
+
+type PropsType = {
+    profile: profileType,
+    isOwner: boolean,
+    savePhoto: (newPhoto: any) => void
+}
