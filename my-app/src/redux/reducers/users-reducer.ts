@@ -4,6 +4,7 @@ import {InferActionsTypes, thunkType} from "../redux-store";
 import {Dispatch} from "redux";
 import {usersAPI} from "../../api/users-api";
 import {followUnfollowAPI} from "../../api/follow-unfollow-api";
+import {responseType} from "../../api/api";
 
 let initialState = {
     users: [] as Array<usersType>,
@@ -11,8 +12,12 @@ let initialState = {
     pageSize: 30,
     totalItemsCount: 0,
     currentPage: 1,
+    filter: {
+        term: "",
+        friend: null as null | boolean
+    },
     followingInProgress: [] as Array<number>,
-    isFetching: true,
+    isFetching: false,
 };
 
 const usersReducer = (state = initialState, action: usersActionTypes): initialStateType => {
@@ -52,6 +57,13 @@ const usersReducer = (state = initialState, action: usersActionTypes): initialSt
             return {
                 ...state,
                 currentPage: action.pageNumber
+            }
+        }
+        case
+        "SET_FILTER_USERS": {
+            return {
+                ...state,
+                filter: action.payload
             }
         }
         case
@@ -104,6 +116,11 @@ export const usersActions = {
         pageNumber
     } as const),
 
+    setFilterUsers: (filter: filterType) => ({
+        type: 'SET_FILTER_USERS',
+        payload: filter
+    } as const),
+
     setTotalUsersCount: (totalItemsCount: number) => ({
         type: 'SET_TOTAL_USERS_COUNT',
         totalItemsCount
@@ -121,11 +138,12 @@ export const usersActions = {
     } as const)
 }
 
-export const requestUsers = (currentPage: number, pageSize: number): thunkType<usersActionTypes> => {
+export const requestUsers = (currentPage: number, pageSize: number, filter: filterType): thunkType<usersActionTypes> => {
     return async (dispatch) => {
         dispatch(usersActions.toggleIsFetching(true));//circle of loading on
         dispatch(usersActions.setCurrentPage(currentPage))
-        let data = await usersAPI.getUsers(currentPage, pageSize)
+        dispatch(usersActions.setFilterUsers(filter))
+        let data = await usersAPI.getUsers(currentPage, pageSize, filter.term, filter.friend)
         dispatch(usersActions.setUsers(data.items));
         dispatch(usersActions.setTotalUsersCount(data.totalCount));
         dispatch(usersActions.toggleIsFetching(false)); //circle of loading off
@@ -134,7 +152,7 @@ export const requestUsers = (currentPage: number, pageSize: number): thunkType<u
 
 const followUnfollowToggle = async (dispatch: dispatchType,
                                     userId: number,
-                                    apiMethod: any,
+                                    apiMethod: (userId: number) => Promise<responseType>,
                                     actionCreator: (userId: number) => usersActionTypes
 ) => {
     dispatch(usersActions.toggleFollowingInProgress(true, userId)) //disabled button
@@ -159,6 +177,8 @@ export const getUnfollow = (userId: number): thunkType<usersActionTypes> => {
 
 export default usersReducer
 
-type usersActionTypes = InferActionsTypes<typeof usersActions>
+
+export type usersActionTypes = InferActionsTypes<typeof usersActions>
+export type filterType = typeof initialState.filter
 type dispatchType = Dispatch<usersActionTypes>
-type initialStateType = typeof initialState
+export type initialStateType = typeof initialState

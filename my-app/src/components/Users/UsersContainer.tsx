@@ -3,10 +3,11 @@ import {connect} from "react-redux";
 import Users from "./Users";
 import Preloader from "../common/Preloader/Preloader";
 import {
+    filterType,
     getFollow, getUnfollow, requestUsers
 } from "../../redux/reducers/users-reducer";
 import {
-    getCurrentPage,
+    getCurrentPage, getFilterObj,
     getFollowingInProgress,
     getIsFetching,
     getPageSize, getPortionSize, getTotalCount, getUsers,
@@ -15,35 +16,23 @@ import {usersType} from "../../types/types";
 import {AppStateType} from "../../redux/redux-store";
 
 
-type mapStatePropsType = {
-    users: Array<usersType>,
-    pageSize: number,
-    totalItemsCount: number,
-    currentPage: number,
-    isFetching: boolean,
-    followingInProgress: Array<number>,
-    portionSize: number,
-}
-
-type mapDispatchPropsType = {
-    requestUsers: (currentPage: number, pageSize: number) => void
-    getFollow: (userId: number) => void,
-    getUnfollow: (userId: number) => void,
-}
-
-type propsType = mapStatePropsType & mapDispatchPropsType
 
 
 class UsersContainer extends React.Component<propsType> {
 
     componentDidMount() { //жизненный цикл, встроенный объект
-        const {currentPage, pageSize} = this.props
-        this.props.requestUsers(currentPage, pageSize)
+        const {currentPage, pageSize, filter} = this.props
+        this.props.requestUsers(currentPage, pageSize, filter)
     }
 
     pageChanged = (pageNumber: number) => {
+        const {pageSize, filter} = this.props
+        this.props.requestUsers(pageNumber, pageSize, filter)
+    }
+
+    filterChanged = (filter: filterType) => {
         const {pageSize} = this.props
-        this.props.requestUsers(pageNumber, pageSize)
+        this.props.requestUsers(1, pageSize, filter)
     }
 
 
@@ -63,6 +52,7 @@ class UsersContainer extends React.Component<propsType> {
                     followingInProgress={this.props.followingInProgress}
                     getFollow={this.props.getFollow}
                     portionSize={this.props.portionSize}
+                    filterChanged={this.filterChanged}
                 />
             </>
         );
@@ -79,6 +69,7 @@ let mapStateToProps = (state: AppStateType): mapStatePropsType => {
         isFetching: getIsFetching(state),
         followingInProgress: getFollowingInProgress(state),
         portionSize: getPortionSize(state),
+        filter: getFilterObj(state)
     }
 
 }
@@ -92,3 +83,27 @@ export default connect(
         getUnfollow
     }
 )(UsersContainer);
+
+
+
+
+
+
+type mapStatePropsType = {
+    users: Array<usersType>,
+    pageSize: number,
+    totalItemsCount: number,
+    currentPage: number,
+    isFetching: boolean,
+    followingInProgress: Array<number>,
+    portionSize: number,
+    filter: filterType
+}
+
+type mapDispatchPropsType = {
+    requestUsers: (currentPage: number, pageSize: number, filter: filterType) => void
+    getFollow: (userId: number) => void,
+    getUnfollow: (userId: number) => void,
+}
+
+type propsType = mapStatePropsType & mapDispatchPropsType
