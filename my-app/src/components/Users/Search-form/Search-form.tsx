@@ -29,9 +29,6 @@ const UsersSearchForm: React.FC<PropsType> = React.memo(({filterChanged}) => {
         setSubmitting(true)
     }
 
-
-
-
     return (
         <Formik
             initialValues={{term: '',

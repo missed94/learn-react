@@ -5,7 +5,7 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import Sidebar from "./components/Sidebar/Sidebar";
-import UsersContainer from "./components/Users/UsersContainer";
+import UsersPage from "./components/Users/UsersPage";
 import {connect, Provider} from "react-redux";
 import {compose} from "redux";
 import {initializeApp} from "./redux/reducers/app-reducer";
@@ -55,7 +55,7 @@ class App extends React.Component<propsType> {
                             <Route path="/profile/:userId?" render={() => <ProfileWithSuspense/>}
                             />
                             <Route path="/Users" render={() =>
-                                <UsersContainer/>
+                                <UsersPage/>
                             }
                             />
                             <Route path="/news" render={() => <News/>}/>

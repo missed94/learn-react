@@ -1,28 +1,21 @@
-import React, {FC} from "react";
+import React from "react";
 import classes from "./Login.module.scss"
 import LoginReduxForm, {loginFormValuesType} from "./LoginForm/LoginForm";
-import {connect} from "react-redux";
-import {login} from "../../redux/reducers/auth-reducer";
+import {useDispatch, useSelector} from "react-redux";
 import {Redirect} from "react-router-dom";
 import {AppStateType} from "../../redux/redux-store";
+import {login} from "../../redux/reducers/auth-reducer";
 
-type mapStatePropsType = {
-    isAuth: boolean
-    captchaUrl: string | null
-}
 
-type mapDispatchPropsType = {
-    login: (
-        email: string,
-        password: string,
-        rememberMe: boolean,
-        captcha: null | string) => void
-}
+const Login: React.FC = () => {
 
-const Login: FC<mapStatePropsType & mapDispatchPropsType> = ({login, isAuth, captchaUrl}) => {
+    const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+    const captchaUrl = useSelector((state: AppStateType) => state.auth.captchaUrl)
 
-    const onSubmit = (formData: loginFormValuesType) => {
-        login(formData.email, formData.password, formData.rememberMe, formData.captcha)
+    const dispatch = useDispatch();
+
+    const handleLogin = (formData: loginFormValuesType) => {
+        dispatch(login(formData.email, formData.password, formData.rememberMe, formData.captcha))
     }
 
     if (isAuth) return <Redirect to={"/profile"}/>
@@ -30,19 +23,12 @@ const Login: FC<mapStatePropsType & mapDispatchPropsType> = ({login, isAuth, cap
     return (
         <div className={classes.loginComponent}>
             <h1>LOGIN</h1>
-            <LoginReduxForm captchaUrl={captchaUrl} onSubmit={onSubmit}/>
+            <LoginReduxForm captchaUrl={captchaUrl} onSubmit={handleLogin}/>
         </div>
 
     )
 }
 
 
-const mapStateToProps = (state: AppStateType) => {
-    return {
-        isAuth: state.auth.isAuth,
-        captchaUrl: state.auth.captchaUrl
-    }
-}
-
-export default connect(mapStateToProps, {login})(Login)
+export default Login
 
