@@ -8,11 +8,12 @@ import {filterType, getFollow, getUnfollow, requestUsers} from "../../redux/redu
 import {useDispatch, useSelector} from "react-redux";
 import {
     getCurrentPage, getFilterObj,
-    getFollowingInProgress,
+    getFollowingInProgress, getIsFetching,
     getPageSize,
     getPortionSize,
     getTotalCount, getUsers
 } from "../../redux/selectors/users-selector";
+import Preloader from "../common/Preloader/Preloader";
 
 
 const Users: React.FC<PropsType> = () => {
@@ -24,6 +25,7 @@ const Users: React.FC<PropsType> = () => {
     const portionSize = useSelector(getPortionSize)
     const users = useSelector(getUsers)
     const filter = useSelector(getFilterObj)
+    const isFetching = useSelector(getIsFetching)
 
     const dispatch = useDispatch();
 
@@ -68,9 +70,14 @@ const Users: React.FC<PropsType> = () => {
                 currentPage={currentPage}
                 portionSize={portionSize}
             />
-            <ul className={classes.users__list}>
-                {usersArray}
-            </ul>
+            {
+                isFetching
+                    ? <Preloader/>
+                    : <ul className={classes.users__list}>
+                        {usersArray}
+                    </ul>
+            }
+
         </div>
     )
 }

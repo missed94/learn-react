@@ -9,17 +9,8 @@ type UsersPagePropsType = {}
 
 const UsersPage: React.FC<UsersPagePropsType> = (props) => {
 
-    const isFetching = useSelector(getIsFetching)
-
     return (
-        <>
-            {
-                isFetching
-                    ? <Preloader/>
-                    : null
-            }
             <Users/>
-        </>
     );
 }
 
