@@ -44,7 +44,7 @@ const Pagination: React.FC<PropsType> = ({
                         .filter(pageNumber => pageNumber >= leftPortionPageNumber && pageNumber <= rightPortionPageNumber)
                         .map((pageNumber) => {
                             return (
-                                <li className={classes.pagination__item}>
+                                <li key={pageNumber} className={classes.pagination__item}>
                                     <a onClick={() => {
                                         pageChanged(pageNumber)
                                     }}

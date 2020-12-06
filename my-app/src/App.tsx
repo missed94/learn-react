@@ -1,5 +1,5 @@
 import React from "react";
-import {HashRouter, Redirect, Route, withRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter, Redirect, Route, withRouter} from "react-router-dom";
 import "./App.scss";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
@@ -13,6 +13,8 @@ import Preloader from "./components/common/Preloader/Preloader";
 import store, {AppStateType} from "./redux/redux-store";
 import {withSuspense} from "./components/hoc/withSuspense";
 import Header from "./components/Header/Header";
+import {Switch} from "antd";
+import {SwitchProps} from "antd/es/switch";
 
 
 const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer')); //ленивая загрузка компоненты
@@ -26,7 +28,6 @@ const Login = React.lazy(() => import('./components/Login/Login'));
 const LoginWithSuspense = withSuspense(Login)
 
 
-
 class App extends React.Component<propsType> {
 
     componentDidMount() {
@@ -36,7 +37,7 @@ class App extends React.Component<propsType> {
     render() {
 
         if (!this.props.initialized) {
-           return <Preloader/>
+            return <Preloader/>
         }
         return (
 
@@ -45,22 +46,39 @@ class App extends React.Component<propsType> {
                     <Header/>
                     <Sidebar/>
                     <div className="app-wrapper-content">
-                            <Redirect exact from="/" to="/profile" />
+                            <Route
+                                exact
+                                path="/"
+                                render={() => <Redirect to={"/profile"}/>}
+                            />
                             <Route
                                 path="/login"
                                 render={() => <LoginWithSuspense/>}
                             />
-                            <Route path="/dialogs" render={() => <DialogsWithSuspense/>}
+                            <Route
+                                path="/dialogs"
+                                render={() => <DialogsWithSuspense/>}
                             />
-                            <Route path="/profile/:userId?" render={() => <ProfileWithSuspense/>}
+                            <Route
+                                path="/profile/:userId?"
+                                render={() => <ProfileWithSuspense/>}
                             />
-                            <Route path="/Users" render={() =>
-                                <UsersPage/>
-                            }
+                            <Route
+                                path="/Users"
+                                render={() => <UsersPage/>}
                             />
-                            <Route path="/news" render={() => <News/>}/>
-                            <Route path="/music" render={() => <Music/>}/>
-                            <Route path="/settings" render={() => <Settings/>}/>
+                            <Route
+                                path="/news"
+                                render={() => <News/>}
+                            />
+                            <Route
+                                path="/music"
+                                render={() => <Music/>}
+                            />
+                            <Route
+                                path="/settings"
+                                render={() => <Settings/>}
+                            />
                     </div>
                 </div>
             </div>
@@ -73,7 +91,6 @@ type mapDispatchToPropsType = {
     initializeApp: () => void
 }
 type propsType = mapStateToPropsType & mapDispatchToPropsType
-
 
 
 let mapStateToProps = (state: AppStateType) => ({
@@ -89,12 +106,12 @@ let AppContainer = compose<React.ComponentType>(
 )(App)
 
 
- let SamuraiJSApp = () => {
-   return <HashRouter>
+let SamuraiJSApp = () => {
+    return <BrowserRouter>
         <Provider store={store}>
             <AppContainer/>
         </Provider>
-    </HashRouter>
+    </BrowserRouter>
 }
 
 export default SamuraiJSApp

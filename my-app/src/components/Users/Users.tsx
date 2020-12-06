@@ -14,6 +14,8 @@ import {
     getTotalCount, getUsers
 } from "../../redux/selectors/users-selector";
 import Preloader from "../common/Preloader/Preloader";
+import {useHistory} from "react-router-dom";
+import * as queryString from "querystring";
 
 
 const Users: React.FC<PropsType> = () => {
@@ -27,11 +29,32 @@ const Users: React.FC<PropsType> = () => {
     const filter = useSelector(getFilterObj)
     const isFetching = useSelector(getIsFetching)
 
+    const history = useHistory();
     const dispatch = useDispatch();
 
+
+
     useEffect(() => {
-        dispatch(requestUsers(currentPage, pageSize, filter))
-    }, [currentPage, pageSize, filter])
+
+        const parsed = queryString.parse(history.location.search.substr(1)) as {term: string, page: string, friend: string}
+
+        let actualPage = currentPage
+        let actualFilter = filter
+
+        if (parsed.page) actualPage = +parsed.page
+        if (parsed.term) actualFilter = { ...actualFilter, term: parsed.term as string}
+        if (parsed.friend) actualFilter = { ...actualFilter, friend: parsed.friend === "null" ? null : parsed.friend === "true" ? true : false}
+
+        dispatch(requestUsers(actualPage, pageSize, actualFilter))
+    }, [])
+
+    useEffect(() => {
+       history.push({
+               pathname: "/users",
+               search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
+           }
+       )
+   }, [filter, currentPage])
 
     const pageChanged = (pageNumber: number) => {
         dispatch(requestUsers(pageNumber, pageSize, filter))

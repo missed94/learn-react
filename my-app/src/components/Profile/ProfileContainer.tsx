@@ -22,10 +22,13 @@ class ProfileContainer extends React.Component<propsType> {
         let urlProfileId: number | null = +this.props.match.params.userId  //такой сложный путь связан с withRouter
         if (!urlProfileId) {
             urlProfileId = this.props.AuthUserId
-            console.error("ID should exists in URI params or in state (AuthUserId)")
         }
-        this.props.getProfile(urlProfileId as number)
-        this.props.getUserStatus(urlProfileId as number)
+        if (!urlProfileId) {
+            console.error("ID should exists in URI params or in state (AuthUserId)")
+        } else {
+            this.props.getProfile(urlProfileId as number)
+            this.props.getUserStatus(urlProfileId as number)
+        }
     }
 
     componentDidMount() {
