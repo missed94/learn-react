@@ -7,15 +7,19 @@ import UsersSearchForm from "./Search-form/Search-form";
 import {filterType, getFollow, getUnfollow, requestUsers} from "../../redux/reducers/users-reducer";
 import {useDispatch, useSelector} from "react-redux";
 import {
-    getCurrentPage, getFilterObj,
-    getFollowingInProgress, getIsFetching,
+    getCurrentPage,
+    getFilterObj,
+    getFollowingInProgress,
+    getIsFetching,
     getPageSize,
     getPortionSize,
-    getTotalCount, getUsers
+    getTotalCount,
+    getUsers
 } from "../../redux/selectors/users-selector";
 import Preloader from "../common/Preloader/Preloader";
 import {useHistory} from "react-router-dom";
 import * as queryString from "querystring";
+import {BooleanParam, NumberParam, StringParam, useQueryParams} from "use-query-params";
 
 
 const Users: React.FC<PropsType> = () => {
@@ -33,28 +37,50 @@ const Users: React.FC<PropsType> = () => {
     const dispatch = useDispatch();
 
 
-
+    const [query, setQuery] = useQueryParams({
+        page: NumberParam,
+        term: StringParam,
+        friend: BooleanParam
+    });
+    console.log(query)
     useEffect(() => {
-
-        const parsed = queryString.parse(history.location.search.substr(1)) as {term: string, page: string, friend: string}
 
         let actualPage = currentPage
         let actualFilter = filter
 
-        if (parsed.page) actualPage = +parsed.page
-        if (parsed.term) actualFilter = { ...actualFilter, term: parsed.term as string}
-        if (parsed.friend) actualFilter = { ...actualFilter, friend: parsed.friend === "null" ? null : parsed.friend === "true" ? true : false}
 
+        if (query.page) actualPage = query.page
+        if (query.term) actualFilter = {...actualFilter, term: query.term}
+        if (query.friend) actualFilter = {
+            ...actualFilter,
+            friend: query.friend
+        }
         dispatch(requestUsers(actualPage, pageSize, actualFilter))
+
+        return () => {
+            dispatch(requestUsers(1, pageSize, {term: "", friend: null}))
+        }
     }, [])
 
     useEffect(() => {
-       history.push({
-               pathname: "/users",
-               search: `?term=${filter.term}&friend=${filter.friend}&page=${currentPage}`
-           }
-       )
-   }, [filter, currentPage])
+
+        /*if (!!filter.term) query.term = filter.term
+        if (filter.friend !== null) query.friend = String(filter.friend)
+        if (currentPage !== 1) query.page = String(currentPage)*/
+
+        history.push({
+                pathname: "/users",
+                search: queryString.stringify(query)
+            }
+        )
+
+        setQuery({
+            page: currentPage,
+            term: filter.term,
+            friend: filter.friend
+        })
+
+    }, [filter, currentPage])
 
     const pageChanged = (pageNumber: number) => {
         dispatch(requestUsers(pageNumber, pageSize, filter))
@@ -109,3 +135,4 @@ export default Users
 
 
 type PropsType = {}
+type queryParamsType = { term?: string, page?: string, friend?: string }
